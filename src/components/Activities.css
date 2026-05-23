@@ -1,0 +1,1051 @@
+/* =============================================
+   ACTIVITIES PAGE — Full standalone page styles
+   ============================================= */
+
+.activities-page {
+  min-height: 100vh;
+  background: transparent;
+}
+
+/* ─────────────────────────────────────────────
+   HERO BANNER
+───────────────────────────────────────────── */
+.act-hero {
+  padding: 7rem 2rem 2.5rem;
+  display: flex;
+  justify-content: center;
+  background: #eef5eb;
+}
+
+.act-hero__card {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  background: #ddeedd;
+  border-radius: 32px;
+  padding: 2.8rem 3rem;
+  max-width: 1050px;
+  width: 100%;
+  box-shadow: 0 8px 40px rgba(26, 77, 46, 0.10);
+  border: 1px solid rgba(46, 120, 79, 0.12);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Soft radial glow */
+.act-hero__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(180, 230, 195, 0.5) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.act-hero__left {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* Badge */
+.act-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #2D7A4F;
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 50px;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+}
+
+/* Title */
+.act-hero__title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  color: #1a2e1a;
+  line-height: 1.18;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.act-hero__title-em {
+  font-style: normal;
+  color: #2D7A4F;
+}
+
+/* Description */
+.act-hero__desc {
+  font-size: 0.84rem;
+  color: #4a6b55;
+  line-height: 1.75;
+  max-width: 380px;
+  margin-bottom: 1.8rem;
+}
+
+/* CTA Button */
+.act-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2e1a;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.75rem 1.8rem;
+  border-radius: 50px;
+  letter-spacing: 0.03em;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 20px rgba(26, 46, 26, 0.35);
+}
+
+.act-hero__btn:hover {
+  background: #0f1f0f;
+}
+
+/* Right image */
+.act-hero__img-wrap {
+  flex: 0 0 340px;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(26, 77, 46, 0.22);
+  position: relative;
+  z-index: 1;
+}
+
+.act-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─────────────────────────────────────────────
+   ACTIVITIES BENTO SECTION
+───────────────────────────────────────────── */
+.act-bento-section {
+  padding: 5rem 2rem;
+  background: transparent;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.act-bento-container {
+  background: #fdfaf5; /* Soft cream/beige like in the photo */
+  padding: 3rem 2.5rem 4rem;
+  border-radius: 40px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* ── Section heading ── */
+.act-bento-section__header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.act-bento-section__title {
+  font-family: 'Dancing Script', 'Playfair Display', cursive;
+  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  font-weight: 700;
+  color: #2d4a3e; /* Darker green for title */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.act-leaf {
+  color: #8fb996;
+  display: inline-block;
+}
+
+.act-leaf--flip {
+  transform: scaleX(-1) rotate(15deg);
+}
+
+.act-bento-section__subtitle {
+  font-size: 1.1rem;
+  color: #6a7565;
+  font-style: normal; /* Match the cleaner look of the photo */
+  letter-spacing: 0.01em;
+  opacity: 0.85;
+}
+
+/* ─────────────────────────────────────────────
+   BENTO GRID LAYOUT
+───────────────────────────────────────────── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 280px 240px;
+  gap: 18px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* Large card: spans both rows on the left */
+.bento-card--large {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.bento-grid {
+  grid-template-areas:
+    "large medium"
+    "large smalls";
+}
+
+.bento-card--large  { grid-area: large; }
+.bento-card--medium { grid-area: medium; }
+
+.bento-smalls {
+  grid-area: smalls;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* ── Base card styles ── */
+.bento-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.bento-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Background image layer */
+.bento-card__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.bento-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Gradient: transparent at top, dark at bottom */
+.bento-card__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 45%,
+    rgba(0, 0, 0, 0.15) 65%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+/* Content pinned to bottom */
+.bento-card__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  z-index: 2;
+}
+
+.bento-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  line-height: 1.2;
+}
+
+.bento-card--small .bento-card__title {
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Description — large card only */
+.bento-card__desc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+  max-width: 280px;
+}
+
+/* Book Now button — large card */
+.bento-card__btn {
+  display: inline-block;
+  background: #3a6b4a; /* Nice earthy green */
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.6rem;
+  border-radius: 12px; /* Less rounded for modern look */
+  letter-spacing: 0.02em;
+  transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(58, 107, 74, 0.3);
+}
+
+.bento-card__btn:hover {
+  background: #2d5238;
+}
+
+/* Book Now link — medium & small cards */
+.bento-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.bento-card__link:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+
+/* ── ADRENALINE & OUTDOOR FUN ── */
+.adrenaline-section {
+  padding: 6rem 2rem;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.adrenaline-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.adrenaline-header__top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.adrenaline-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem;
+  color: #2d4a3e;
+}
+
+.adrenaline-subtitle {
+  font-size: 1rem;
+  color: #6a7565;
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.adrenaline-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.adr-card {
+  background: #fdfaf5;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  transition: all 0.35s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.adr-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+}
+
+.adr-card__img-wrap {
+  height: 190px;
+  position: relative;
+  overflow: hidden;
+}
+
+.adr-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.adr-card:hover .adr-card__img-wrap img {
+  transform: scale(1.1);
+}
+
+.adr-card__badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(45, 122, 79, 0.85);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.adr-card__content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.adr-card__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d4a3e;
+  margin-bottom: 0.75rem;
+}
+
+.adr-card__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.adr-card__details span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #8fb996;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.adr-card__btn {
+  background: #eef5eb;
+  color: #3a6b4a;
+  border: 1.5px solid #dcebd8;
+  padding: 0.7rem 1rem;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
+
+.adr-card__btn:hover {
+  background: #3a6b4a;
+  color: white;
+  border-color: #3a6b4a;
+}
+
+/* ── OFF-ROAD KARTING SECTION ── */
+.karting-section {
+  padding: 4rem 2rem;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.karting-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.karting-card {
+  background: #fdfaf5; /* Soft cream container */
+  border-radius: 30px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s ease;
+}
+
+.karting-card:hover {
+  transform: translateY(-5px);
+}
+
+.karting-card__img-wrap {
+  flex: 0 0 45%;
+  height: 180px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.karting-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.karting-card__content {
+  flex: 1;
+}
+
+.karting-card__title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2d4a3e;
+  margin-bottom: 0.5rem;
+}
+
+.karting-card__desc {
+  font-size: 0.85rem;
+  color: #6a7565;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.karting-card__link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3a6b4a;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s ease;
+}
+
+.karting-card__link:hover {
+  gap: 8px;
+}
+
+/* ── KIDS ZONE SECTION ── */
+.kids-section {
+  padding: 6rem 2rem;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.kids-container {
+  background: #fdfaf5; /* Soft cream large container */
+  border-radius: 45px;
+  padding: 4rem 3rem;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  position: relative;
+}
+
+.kids-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.kids-header__top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.kids-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem;
+  color: #2d4a3e;
+}
+
+.kids-leaf {
+  color: #3a6b4a;
+  opacity: 0.6;
+}
+
+.kids-subtitle {
+  font-size: 0.95rem;
+  color: #6a7565;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.kids-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.kids-card {
+  background: #ffffff;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease;
+}
+
+.kids-card:hover {
+  transform: translateY(-8px);
+}
+
+.kids-card__img-wrap {
+  height: 200px;
+}
+
+.kids-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kids-card__content {
+  padding: 1.5rem;
+}
+
+.kids-card__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d4a3e;
+  margin-bottom: 0.5rem;
+}
+
+.kids-card__desc {
+  font-size: 0.8rem;
+  color: #6a7565;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.kids-card__age {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #8fb996;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .adrenaline-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .karting-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .kids-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .kids-container {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .act-hero__card {
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+    border-radius: 22px;
+  }
+
+  .act-hero__img-wrap {
+    flex: none;
+    width: 100%;
+    height: 200px;
+  }
+
+  .act-hero__title {
+    font-size: 1.8rem;
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "large"
+      "medium"
+      "smalls";
+  }
+
+  .bento-card--large {
+    height: 340px;
+  }
+
+  .bento-card--medium {
+    height: 220px;
+  }
+
+  .bento-smalls {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .adrenaline-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bento-smalls {
+    grid-template-columns: 1fr;
+  }
+  
+  .kids-title {
+    font-size: 2.5rem;
+  }
+}
+
+/* ── DÉTENTE & NATURE SECTION ── */
+.nature-section {
+  padding: 4rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.nature-container {
+  max-width: 1000px;
+  width: 100%;
+}
+
+.nature-card {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  background: #eef4ea; /* soft green/cream background card */
+  border: 1px solid rgba(45, 122, 79, 0.12);
+  border-radius: 40px;
+  padding: 3rem;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.04);
+}
+
+.nature-img-wrap {
+  flex: 0 0 45%;
+  height: 380px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+.nature-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nature-card:hover .nature-img {
+  transform: scale(1.04);
+}
+
+.nature-content {
+  flex: 1;
+}
+
+.nature-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #2D7A4F;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.nature-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 700;
+  color: #2d4a3e;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+}
+
+.nature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.nature-item {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+
+.nature-item__icon-wrap {
+  background: #ffffff;
+  color: #2D7A4F;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.nature-item:hover .nature-item__icon-wrap {
+  transform: scale(1.1);
+  background: #2D7A4F;
+  color: #ffffff;
+}
+
+.nature-item__icon {
+  stroke-width: 2.2;
+}
+
+.nature-item__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.nature-item__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d4a3e;
+  margin-bottom: 0.3rem;
+}
+
+.nature-item__desc {
+  font-size: 0.85rem;
+  color: #6a7565;
+  line-height: 1.5;
+}
+
+/* ── EVENTS & GROUP ADVENTURES SECTION ── */
+.events-section {
+  padding: 4rem 2rem 6rem;
+  display: flex;
+  justify-content: center;
+}
+
+.events-container {
+  max-width: 1000px;
+  width: 100%;
+  background: #3d664c; /* matching green color from photo */
+  border-radius: 40px;
+  padding: 4rem 3.5rem;
+  box-shadow: 0 15px 50px rgba(27, 67, 50, 0.15);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft inner background highlights */
+.events-container::after {
+  content: '';
+  position: absolute;
+  top: -150px;
+  right: -150px;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.events-header__left {
+  flex: 1;
+  max-width: 65%;
+}
+
+.events-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+  line-height: 1.1;
+}
+
+.events-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+.events-header__btn {
+  background: #1e3527;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.9rem 2.2rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.events-header__btn:hover {
+  background: #ffffff;
+  color: #3d664c;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.event-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 26px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.event-card__img-wrap {
+  height: 190px;
+  overflow: hidden;
+}
+
+.event-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.event-card:hover .event-card__img-wrap img {
+  transform: scale(1.08);
+}
+
+.event-card__content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.6rem;
+}
+
+.event-card__desc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.55;
+  margin-bottom: 1.6rem;
+}
+
+.event-card__btn {
+  margin-top: auto;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 0.65rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.event-card__btn:hover {
+  background: #ffffff;
+  color: #3d664c;
+  border-color: #ffffff;
+}
+
+/* ── RESPONSIVE ADAPTATION ── */
+@media (max-width: 991px) {
+  .nature-card {
+    flex-direction: column;
+    padding: 2.2rem;
+    gap: 2rem;
+  }
+  
+  .nature-img-wrap {
+    flex: none;
+    width: 100%;
+    height: 280px;
+  }
+  
+  .events-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.8rem;
+  }
+  
+  .events-header__left {
+    max-width: 100%;
+  }
+  
+  .events-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
