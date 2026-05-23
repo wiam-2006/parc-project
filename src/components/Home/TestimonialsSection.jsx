@@ -1,135 +1,145 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from "react";
+import "./Home.css";
 
-/* ── Review data ── */
-const reviews = [
+const testimonials = [
   {
     id: 1,
-    name: 'Sarah M.',
-    avatar: 'https://i.pravatar.cc/100?img=47',
-    stars: 5,
-    text: '"I had an amazing time! The activities were exciting and well organized. The staff was very friendly and helpful. Definitely a place I would visit again with my family."',
+    name: "Sofia Martinez",
+    role: "Visitor",
+    rating: 4,
+    text: "I had an amazing time! The activities were exciting and well organized. The staff was very friendly and helpful. Definitely a place I would visit again with my family.",
+    image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=500&fit=crop&crop=face",
   },
   {
     id: 2,
-    name: 'James T.',
-    avatar: 'https://i.pravatar.cc/100?img=12',
-    stars: 5,
-    text: '"Absolutely breathtaking views and so many activities for all ages. The zip-line was a highlight — our kids are still talking about it weeks later!"',
+    name: "Karim Benali",
+    role: "Family Trip",
+    rating: 5,
+    text: "An unforgettable experience for the whole family. The kids loved every moment, and the natural surroundings were breathtaking. We will definitely be coming back!",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face",
   },
   {
     id: 3,
-    name: 'Amina R.',
-    avatar: 'https://i.pravatar.cc/100?img=33',
-    stars: 4,
-    text: '"A truly unique setting in the heart of nature. Everything felt safe and well-maintained. We loved the paintball and the picnic area with sea views."',
+    name: "Amina Tazi",
+    role: "Solo Traveler",
+    rating: 5,
+    text: "The peaceful atmosphere and beautiful landscape made it the perfect retreat. I felt completely at home and the staff went above and beyond to make my stay special.",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=face",
   },
 ];
 
-const Stars = ({ count }) => (
-  <span className="ts-stars" aria-label={`${count} out of 5 stars`}>
-    {Array.from({ length: 5 }).map((_, i) => (
-      <span key={i} className={i < count ? 'ts-star--on' : 'ts-star--off'}>★</span>
-    ))}
-  </span>
-);
-
-/* Botanical swirl SVG */
-const SwirlSVG = () => (
-  <svg width="46" height="90" viewBox="0 0 46 90" fill="none">
-    <path
-      d="M23 5 C10 20 5 35 15 48 C25 60 38 55 38 42 C38 30 28 26 20 32 C12 38 14 52 23 58 C34 65 42 58 40 47"
-      stroke="rgba(168,213,176,0.55)" strokeWidth="2" fill="none" strokeLinecap="round"
+const Star = ({ filled }) => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon
+      points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+      fill={filled ? "#D4A017" : "#ccc"}
+      fillOpacity={filled ? 1 : 0.4}
     />
-    <path d="M23 58 C20 70 18 80 23 85" stroke="rgba(168,213,176,0.55)" strokeWidth="2" fill="none" strokeLinecap="round" />
-    <circle cx="23" cy="5" r="3" fill="rgba(168,213,176,0.5)" />
-    <circle cx="38" cy="42" r="2.5" fill="rgba(168,213,176,0.4)" />
   </svg>
 );
 
-export default function TestimonialsSection() {
+const RatingStars = ({ rating }) => (
+  <div style={{ display: "flex", gap: "3px" }}>
+    {[1, 2, 3, 4, 5].map((i) => (
+      <Star key={i} filled={i <= rating} />
+    ))}
+  </div>
+);
+
+const OrnamentSVG = () => (
+  <svg width="120" height="24" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="12" x2="40" y2="12" stroke="#2d6a4f" strokeWidth="1" strokeOpacity="0.5" />
+    <circle cx="50" cy="12" r="3" fill="#2d6a4f" fillOpacity="0.6" />
+    <circle cx="60" cy="12" r="5" fill="none" stroke="#2d6a4f" strokeWidth="1.5" strokeOpacity="0.6" />
+    <path d="M60,7 Q65,12 60,17 Q55,12 60,7Z" fill="#2d6a4f" fillOpacity="0.4" />
+    <circle cx="70" cy="12" r="3" fill="#2d6a4f" fillOpacity="0.6" />
+    <line x1="80" y1="12" x2="120" y2="12" stroke="#2d6a4f" strokeWidth="1" strokeOpacity="0.5" />
+  </svg>
+);
+
+export default function TestimonialSection() {
   const [active, setActive] = useState(0);
-  const review = reviews[active];
+  const [animating, setAnimating] = useState(false);
+
+  const changeTo = (idx) => {
+    if (idx === active || animating) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setActive(idx);
+      setAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      changeTo((active + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [active, animating]);
+
+  const t = testimonials[active];
 
   return (
-    <section className="ts-section" id="testimonials" aria-label="Our Customers Say">
+    <div className="testimonial-wrapper">
+      <div style={{ position: "relative" }}>
+        <img src="/Arrow.png" alt="" className="testimonial-arrow" />
+        <div className="testimonial-card">
 
-      {/* Title */}
-      <div className="ts-title-row">
-        <span className="ts-leaf" aria-hidden="true">🌿</span>
-        <h2 className="ts-title-script">Our Customers Says</h2>
-        <span className="ts-leaf ts-leaf--flip" aria-hidden="true">🌿</span>
-      </div>
+          {/* Left panel */}
+          <div className="left-panel">
+            <p className="intro-text text-center">
+              <img src="/Rhyme.png" alt="" width={160} style={{ display: 'block', margin: '0 auto' }} />
+              Discover what our visitors think about their experience at our park. We are proud to offer
+              memorable moments filled with adventure, fun, and relaxation for all ages.
+            </p>
 
-      {/* Featured card */}
-      <div className="ts-card">
-
-        {/* LEFT panel */}
-        <div className="ts-card__left">
-
-          {/* Vertical dots — pinned to left edge */}
-          <div className="ts-dots-v" role="tablist" aria-label="Select review">
-            {reviews.map((r, i) => (
-              <button
-                key={r.id}
-                className={`ts-dot ${i === active ? 'ts-dot--active' : ''}`}
-                onClick={() => setActive(i)}
-                aria-label={`Review by ${r.name}`}
-                aria-selected={i === active}
-                role="tab"
-              />
-            ))}
-          </div>
-
-          {/* Botanical swirl */}
-          <span className="ts-swirl-left" aria-hidden="true">
-            <SwirlSVG />
-          </span>
-
-          {/* TOP zone — lighter green */}
-          <div className="ts-zone ts-zone--top">
-            <div className="ts-ornament" aria-hidden="true">
-              <svg width="90" height="30" viewBox="0 0 90 30" fill="none">
-                <path d="M4 15 Q22 4 45 15 Q68 26 86 15" stroke="rgba(168,213,176,0.7)" strokeWidth="1.5" fill="none" />
-                <circle cx="45" cy="15" r="4.5" fill="rgba(168,213,176,0.6)" />
-                <circle cx="4" cy="15" r="3" fill="rgba(168,213,176,0.5)" />
-                <circle cx="86" cy="15" r="3" fill="rgba(168,213,176,0.5)" />
-                <circle cx="25" cy="9" r="2" fill="rgba(168,213,176,0.4)" />
-                <circle cx="65" cy="21" r="2" fill="rgba(168,213,176,0.4)" />
-              </svg>
+            <div className={`quote-block ${animating ? "fade-out" : ""}`}>
+              <span className="big-quote">"</span>
+              <p className="quote-text">{t.text}</p>
+              <p className="reviewer-name">{t.name}</p>
+              <p className="reviewer-role">{t.role}</p>
             </div>
 
-            <p className="ts-card__intro">
-              Discover what our visitors think about their experience at our park.
-              We are proud to offer memorable moments filled with adventure,
-              fun, and relaxation for all ages.
-            </p>
+            <div className="bottom-controls">
+              <div className="dots">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    className={`dot ${i === active ? "active" : ""}`}
+                    onClick={() => changeTo(i)}
+                    aria-label={`Go to testimonial ${i + 1}`}
+                  />
+                ))}
+              </div>
+              <div className={`stars-anim ${animating ? "fade-out" : ""}`}>
+                <RatingStars rating={t.rating} />
+              </div>
+            </div>
           </div>
 
-          {/* Stars — at boundary, right-aligned */}
-          <div className="ts-stars-boundary">
-            <Stars count={review.stars} />
-          </div>
-
-          {/* BOTTOM zone — darker green */}
-          <div className="ts-zone ts-zone--bot">
-            <blockquote className="ts-card__quote">{review.text}</blockquote>
-            <p className="ts-card__name">— {review.name}</p>
-          </div>
-        </div>
-
-        {/* RIGHT panel */}
-        <div className="ts-card__right">
-          <div className="ts-card__bg-img" aria-hidden="true" />
-          <div className="ts-card__arch">
-            <img
-              src="/testimonial-portrait.png"
-              alt={`Happy visitor ${review.name}`}
-              className="ts-card__portrait"
+          {/* Right photo panel */}
+          <div className="photo-panel">
+            <div
+              className="photo-bg"
+              style={{
+                backgroundImage: `url(https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&h=700&fit=crop)`,
+              }}
             />
+            <div className="arch-overlay" />
+            <div className="arch-wrapper">
+              <div className="arch-frame">
+                <img
+                  src={t.image}
+                  alt={t.name}
+                  className={`arch-photo ${animating ? "fade-out" : ""}`}
+                />
+              </div>
+            </div>
+            <span className="leaf-deco">🌿</span>
           </div>
+
         </div>
       </div>
-
-    </section>
+    </div>
   );
 }

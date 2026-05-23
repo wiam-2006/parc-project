@@ -1536,3 +1536,230 @@
     align-items: stretch;
   }
 }
+
+/* ======================================= */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap');
+
+.testimonial-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 2rem;
+  width: 100%;
+}
+
+.testimonial-arrow {
+  position: absolute;
+  left: -80px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 140px;
+  z-index: 10;
+  opacity: 0.85;
+}
+
+@media (max-width: 1300px) {
+  .testimonial-arrow {
+    display: none;
+  }
+}
+
+.testimonial-card {
+  font-family: 'Lato', sans-serif;
+  background: linear-gradient(160deg, #2d6a4f 0%, #1b4332 100%);
+  border-radius: 24px;
+  max-width: 880px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(27, 67, 50, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .testimonial-card {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-panel {
+    display: none;
+  }
+}
+
+.left-panel {
+  padding: 0px 35px 40px 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(65, 158, 119, 0.8) 50%, transparent 50%);
+}
+
+.left-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at 10% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.intro-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.divider {
+  display: flex;
+  color: black;
+  justify-content: center;
+}
+
+
+.quote-block {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.quote-block.fade-out {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.big-quote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 52px;
+  color: rgba(255, 255, 255, 0.15);
+  line-height: 0.5;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.quote-text {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14.5px;
+  line-height: 1.8;
+  font-style: italic;
+}
+
+.reviewer-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: #fff;
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.reviewer-role {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.bottom-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+
+.stars-anim {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.stars-anim.fade-out {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.dot.active {
+  background: #D4A017;
+  transform: scale(1.3);
+}
+
+.photo-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.arch-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.photo-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  transition: opacity 0.4s ease;
+}
+
+.arch-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(27, 67, 50, 0.6) 100%);
+}
+
+.arch-frame {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 280px;
+  border-radius: 110px 110px 0 0;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-bottom: none;
+}
+
+.arch-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.arch-photo.fade-out {
+  opacity: 0;
+  transform: scale(1.03);
+}
+
+.leaf-deco {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  opacity: 0.12;
+  font-size: 80px;
+  pointer-events: none;
+  color: #fff;
+}
