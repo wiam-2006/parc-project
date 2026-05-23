@@ -88,7 +88,7 @@ export default function TestimonialSection() {
           {/* Left panel */}
           <div className="left-panel">
             <p className="intro-text text-center">
-              <img src="/Rhyme.png" alt="" width={160} style={{ display: 'block', margin: '0 auto' }} />
+              <img src="/Rhyme.png" alt="" width={160} style={{ display: 'block', margin: '0 auto', paddingTop: "20px", paddingBottom: '25px' }} />
               Discover what our visitors think about their experience at our park. We are proud to offer
               memorable moments filled with adventure, fun, and relaxation for all ages.
             </p>

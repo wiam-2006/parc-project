@@ -6,14 +6,23 @@ const image2 = '/image2.jfif';
 const image3 = '/image3.jfif';
 const image4 = '/image4.jfif';
 const image5 = '/image5.jfif';
-const iconTitre = '/icons.svg';
+const image6 = '/image6.jfif';
+const image7 = '/image7.jfif';
+const image8 = '/image8.jfif';
+const image9 = '/image9.jfif';
+const image10 = '/image10.jfif';
 
 const activities = [
   { id: 1, title: "Quads & Buggies", price: "250 DH", image: image1, alt: "Quads & Buggies" },
   { id: 2, title: "Trampolines", price: "120 DH", image: image2, alt: "Trampolines" },
   { id: 3, title: "Free Fall", price: "150 DH", image: image3, alt: "Free Fall" },
   { id: 4, title: "Rock Climbing", price: "200 DH", image: image4, alt: "Rock Climbing" },
-  { id: 5, title: "Padel Tennis", price: "280 DH", image: image5, alt: "Padel Tennis" }
+  { id: 5, title: "Padel Tennis", price: "280 DH", image: image5, alt: "Padel Tennis" },
+  { id: 6, title: "Paintball", price: "180 DH", image: image6, alt: "Paintball" },
+  { id: 7, title: "Archery", price: "130 DH", image: image7, alt: "Archery" },
+  { id: 8, title: "Zip Line", price: "220 DH", image: image8, alt: "Zip Line" },
+  { id: 9, title: "Swimming Pool", price: "100 DH", image: image9, alt: "Swimming Pool" },
+  { id: 10, title: "Horse Riding", price: "300 DH", image: image10, alt: "Horse Riding" },
 ];
 
 export default function ActivitiesSection() {
