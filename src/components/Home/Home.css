@@ -29,7 +29,7 @@
 .home-hero__bg {
   position: absolute;
   inset: 0;
-  background: url('/camping.png') center/cover no-repeat;
+  background: url('/home_hero.png') center/cover no-repeat;
   transform: scale(1.05);
   animation: heroZoom 1.4s ease-out forwards;
   z-index: -2;
@@ -139,7 +139,7 @@
   border-radius: 50%;
   border: 2px solid #fff;
   margin-left: -16px;
-  background: var(--primary-color, #d14124);
+  background: var(--primary-color, #3b8a62);
   color: #fff;
   display: flex;
   align-items: center;
@@ -198,7 +198,7 @@
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 0.95rem;
-  color: #1a1a1a;
+  color: rgba(28, 121, 82, 0.856);
   margin-bottom: 0.25rem;
 }
 
@@ -213,7 +213,7 @@
 }
 
 .home-hero__booking-item input::placeholder {
-  color: #aaa;
+  color: rgba(28, 121, 82, 0.5);
 }
 
 .home-hero__booking-divider {
@@ -224,7 +224,7 @@
 }
 
 .home-hero__booking-search {
-  background: var(--primary-color, #d14124);
+  background: var(--primary-color, #1a503a);
   color: #fff;
   border: none;
   padding: 1.1rem 2.5rem;
@@ -240,13 +240,13 @@
   white-space: nowrap;
   flex-shrink: 0;
   transition: transform 0.25s ease, background 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 6px 15px rgba(209, 65, 36, 0.3);
+  box-shadow: 0 6px 15px rgba(28, 121, 82, 0.5);
 }
 
 .home-hero__booking-search:hover {
-  background: #b8381e;
+  background: #1a503a;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(209, 65, 36, 0.4);
+  box-shadow: 0 8px 20px rgba(28, 121, 82, 0.5);
 }
 
 /* --- About Us Section --- */
@@ -403,7 +403,7 @@
   font-family: 'Playfair Display', serif;
   font-size: 2.8rem;
   font-weight: 700;
-  color: var(--primary-color, #d14124);
+  color: var(--primary-color, #3b8a62);
   line-height: 1;
   margin-bottom: 0.4rem;
 }
@@ -429,7 +429,7 @@
   font-weight: 700;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--primary-color, #d14124);
+  color: var(--primary-color, #3b8a62);
   margin-bottom: 0.75rem;
 }
 

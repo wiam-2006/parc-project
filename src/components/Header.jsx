@@ -15,7 +15,7 @@ export default function Header({ currentPage, setCurrentPage }) {
 
   const handleNavClick = (e, link) => {
     e.preventDefault();
-    if (['Home', 'Memberships', 'Contact Us', 'Restaurant', 'Activities', 'Events', 'About Us'].includes(link)) {
+    if (['Home', 'Memberships', 'Contact Us', 'Restaurant', 'Activities'].includes(link)) {
       setCurrentPage?.(link);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
