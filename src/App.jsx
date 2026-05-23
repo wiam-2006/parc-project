@@ -28,11 +28,17 @@ function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'Home':
-        return null; // All content removed from Home as requested
+        return <Home />; // All content removed from Home as requested
       case 'Memberships':
         return <Memberships setCurrentPage={setCurrentPage} />;
       case 'Restaurant':
         return <Restaurant />;
+      case 'Reservation':
+        return <BookingSection />;
+      case 'Confirmation':
+        return <ConfirmationSection />;
+      case 'Activities':
+        return <ActivitiesSection setCurrentPage={setCurrentPage} />;
       case 'Contact Us':
         return (
           <>
@@ -44,8 +50,7 @@ function App() {
       default:
         return (
           <>
-            <Hero />
-            <ActivitiesSection setCurrentPage={setCurrentPage} />
+            <Home />
           </>
         );
     }
