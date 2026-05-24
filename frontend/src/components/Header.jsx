@@ -15,7 +15,7 @@ export default function Header({ currentPage, setCurrentPage }) {
 
   const handleNavClick = (e, link) => {
     e.preventDefault();
-    if (['Home', 'Memberships', 'Contact Us', 'Restaurant'].includes(link)) {
+    if (['Home', 'Memberships', 'Contact Us', 'Restaurant', 'Activities'].includes(link)) {
       setCurrentPage?.(link);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -42,9 +42,8 @@ export default function Header({ currentPage, setCurrentPage }) {
             <a
               key={link}
               href="#"
-              className={`header__nav-link ${
-                link === currentPage ? 'header__nav-link--active' : ''
-              }`}
+              className={`header__nav-link ${link === currentPage ? 'header__nav-link--active' : ''
+                }`}
               onClick={(e) => handleNavClick(e, link)}
             >
               {link}

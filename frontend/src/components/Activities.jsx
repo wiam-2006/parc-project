@@ -178,8 +178,9 @@ export default function Activities({ setCurrentPage }) {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
+              style={{ marginBottom: '60px' }}
             >
-              <Zap size={11} fill="currentColor" stroke="none" />
+              <Zap size={15} fill="currentColor" stroke="none" />
               UNLEASH ENERGY
             </motion.span>
 
@@ -188,6 +189,7 @@ export default function Activities({ setCurrentPage }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.7 }}
+              style={{ marginBottom: '30px' }}
             >
               Adventure for every{' '}
               <em className="act-hero__title-em">kinetic soul.</em>
@@ -198,9 +200,10 @@ export default function Activities({ setCurrentPage }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.7 }}
+              style={{ marginBottom: '25px' }}
             >
-              From gravity-defying ziplines to tranquil zen gardens, discover
-              our curated experiences designed to move your spirit.
+              From gravity-defying ziplines to tranquil zen gardens, discover our curated
+              experiences designed to move your spirit.
             </motion.p>
 
             <motion.button
@@ -245,21 +248,17 @@ export default function Activities({ setCurrentPage }) {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="act-bento-section__title">
-              <motion.span
-                animate={{ rotate: [0, -12, 0, 12, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <Leaf size={26} className="act-leaf" strokeWidth={1.5} />
-              </motion.span>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', marginBottom: '0.5rem', fontWeight: 700 }}
+            >
+              <span className="why-leaf" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
               Activities
-              <motion.span
-                animate={{ rotate: [0, 12, 0, -12, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-              >
-                <Leaf size={26} className="act-leaf act-leaf--flip" strokeWidth={1.5} />
-              </motion.span>
-            </h2>
+              <span className="why-leaf why-leaf--flip" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+            </motion.h2>
             <p className="act-bento-section__subtitle">
               Challenge your limits between sky and earth.
             </p>
@@ -284,9 +283,16 @@ export default function Activities({ setCurrentPage }) {
       <section className="adrenaline-section">
         <div className="adrenaline-header">
           <div className="adrenaline-header__top">
-            <Leaf size={24} className="kids-leaf" />
-            <h2 className="adrenaline-title">Adrenaline & Outdoor Fun</h2>
-            <Leaf size={24} className="kids-leaf kids-leaf--flip" />
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', marginBottom: '0.5rem', fontWeight: 700 }}
+            >
+              <span className="why-leaf" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+              Adrenaline & Outdoor Fun
+              <span className="why-leaf why-leaf--flip" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+            </motion.h2>
           </div>
           <p className="adrenaline-subtitle">
             Push your limits with our flagship activities designed for thrill-seekers.<br />
@@ -296,7 +302,7 @@ export default function Activities({ setCurrentPage }) {
 
         <div className="adrenaline-grid">
           {adrenalineActivities.map((activity, idx) => (
-            <motion.div 
+            <motion.div
               key={activity.id}
               className="adr-card"
               initial={{ opacity: 0, y: 30 }}
@@ -325,7 +331,7 @@ export default function Activities({ setCurrentPage }) {
       <section className="karting-section">
         <div className="karting-grid">
           {kartingActivities.map((activity, idx) => (
-            <motion.div 
+            <motion.div
               key={activity.id}
               className="karting-card"
               initial={{ opacity: 0, y: 30 }}
@@ -351,16 +357,23 @@ export default function Activities({ setCurrentPage }) {
         <div className="kids-container">
           <div className="kids-header">
             <div className="kids-header__top">
-              <Leaf size={24} className="kids-leaf" />
-              <h2 className="kids-title">Kids Zone</h2>
-              <Leaf size={24} className="kids-leaf kids-leaf--flip" />
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', marginBottom: '0.5rem', fontWeight: 700 }}
+              >
+                <span className="why-leaf" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+                Kids Zone
+                <span className="why-leaf why-leaf--flip" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+              </motion.h2>
             </div>
             <p className="kids-subtitle">A safe and stimulating universe for budding adventurers aged 3 to 12.</p>
           </div>
 
           <div className="kids-grid">
             {kidsActivities.map((activity, idx) => (
-              <motion.div 
+              <motion.div
                 key={activity.id}
                 className="kids-card"
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -394,12 +407,19 @@ export default function Activities({ setCurrentPage }) {
                 className="nature-img"
               />
             </div>
-            
+
             {/* Right Content */}
             <div className="nature-content">
               <span className="nature-badge">BREATHE</span>
-              <h2 className="nature-title">Relaxation & Nature</h2>
-              
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                style={{ fontFamily: 'Dancing Script', marginTop: '15px', paddingBottom: '20px', fontSize: '3.5rem', color: '#1a503a', marginBottom: '0.5rem', fontWeight: 700 }}
+              >
+                Relaxation & Nature
+              </motion.h2>
+
               <div className="nature-list">
                 <div className="nature-item">
                   <div className="nature-item__icon-wrap">

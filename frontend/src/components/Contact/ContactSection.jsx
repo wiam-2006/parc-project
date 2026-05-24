@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './ContactSection.css';
-import sendContact from '../api/contactApi';
+import sendContact from '../../api/contactApi';
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });

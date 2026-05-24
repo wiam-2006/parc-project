@@ -50,8 +50,8 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: "easeOut" }
   }
@@ -60,7 +60,7 @@ const cardVariants = {
 function ActivityCardComponent({ activity }) {
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
-  
+
   const rotateX = useTransform(y, [0, 1], [10, -10]);
   const rotateY = useTransform(x, [0, 1], [-10, 10]);
 
@@ -85,8 +85,8 @@ function ActivityCardComponent({ activity }) {
       className="activity-card"
       id={`activity-${activity.id}`}
     >
-      <motion.div 
-        className="activity-card__icon" 
+      <motion.div
+        className="activity-card__icon"
         aria-hidden="true"
         whileHover={{ y: [0, -8, 0], transition: { duration: 0.6, repeat: Infinity, ease: "easeInOut" } }}
       >
@@ -103,16 +103,24 @@ export default function ActivitiesSection({ setCurrentPage }) {
     <section className="activities-section">
       {/* Heading */}
       <div className="activities-section__header">
-        <h2 className="activities-section__title">Adventure Awaits</h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', marginBottom: '0.5rem', fontWeight: 700 }}
+        >
+          <span className="why-leaf" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+          Adventure Awaits
+          <span className="why-leaf why-leaf--flip" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+        </motion.h2>
         <p className="activities-section__subtitle">
           Discover endless possibilities for outdoor excitement and eco-friendly adventures.
-          <br />
           Every visit brings new memories to cherish.
         </p>
       </div>
 
       {/* 3×2 Activity Grid */}
-      <motion.div 
+      <motion.div
         className="activities-section__grid"
         variants={containerVariants}
         initial="hidden"
@@ -125,15 +133,15 @@ export default function ActivitiesSection({ setCurrentPage }) {
       </motion.div>
 
       {/* CTA Banner */}
-      <div className="activities-cta">
+      <div className="activities-cta" style={{ marginTop: '60px' }}>
         <h3 className="activities-cta__title">Ready for Your Next Adventure?</h3>
         <p className="activities-cta__body">
           We're here to help you plan the perfect outdoor experience. Whether you're a solo
           explorer or bringing the whole family, our team is ready to make your visit
           unforgettable. Reach out today and let's start planning!
         </p>
-        <button 
-          className="activities-cta__btn" 
+        <button
+          className="activities-cta__btn"
           id="cta-contact-us-now"
           onClick={() => {
             setCurrentPage?.('Contact Us');
