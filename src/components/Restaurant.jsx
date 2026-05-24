@@ -9,7 +9,8 @@ export default function Restaurant() {
   console.log("RESTAURANT COMPONENT LOADED");
   useEffect(() => {
     console.log("FETCHING MENU...");
-    fetch('http://localhost/Funzone-park/backend/public/index.php/api/menu-items')
+    fetch('http://localhost/Funzone-park/backend/public/api/menu-items')
+      // fetch('http://localhost/Funzone-park/backend/public/index.php/api/menu-items')
       .then(res => res.json())
       .then(data => {
         console.log("MENU DATA:", data);
@@ -218,11 +219,12 @@ export default function Restaurant() {
       <div className="w-full h-12 md:h-16" aria-hidden="true" />
 
       {/* The Organic Menu Listing - من DATABASE */}
-      <section id="menu-section" className="w-full max-w-[1000px] mb-40" style={{ marginTop: '50px' }}>
+      <section id="menu-section" className="w-full max-w-[1000px] mb-30">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          style={{ padding: '30px' }}
           className="bg-white/90 backdrop-blur-xl rounded-[60px] p-12 md:p-20 border border-[#c4dbc4] shadow-[0_30px_70px_rgba(27,67,50,0.15)]"
         >
           <div className="flex flex-col items-center mb-12">
@@ -236,7 +238,7 @@ export default function Restaurant() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', marginBottom: '0.5rem', fontWeight: 700 }}
+                style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', fontWeight: 700 }}
               >
                 <span className="why-leaf" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
                 The Organic Menu
@@ -246,7 +248,7 @@ export default function Restaurant() {
             <div className="w-24 h-[3px] bg-gradient-to-r from-transparent via-[#8ccb8c] to-transparent rounded-full" />
           </div>
 
-          <div className="w-full h-24 md:h-32" aria-hidden="true" />
+          <div className="w-full h-12 md:h-16" aria-hidden="true" />
 
           {/* Menu من DATABASE */}
           <div className="relative grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-24">
@@ -263,10 +265,11 @@ export default function Restaurant() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
+                  style={{ padding: '15px' }}
                   transition={{ delay: index * 0.1 }}
                 >
                   <div className="flex items-center gap-4 mb-10">
-                    <h3 className="text-xl font-bold text-[#1b4332] uppercase tracking-[0.2em]">
+                    <h3 className="text-xl font-bold text-[#1a503a] uppercase tracking-[0.2em]" style={{ marginBottom: '20px', fontSize: '24px', color: '#269b6cff' }}>
                       {category}
                     </h3>
                   </div>
