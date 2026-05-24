@@ -99,7 +99,7 @@ const cardVariants = {
   }),
 };
 
-function BentoCard({ activity, index }) {
+function BentoCard({ activity, index, setCurrentPage }) {
   const [hovered, setHovered] = useState(false);
   const isLarge = activity.size === 'large';
 
@@ -146,11 +146,16 @@ function BentoCard({ activity, index }) {
             className="bento-card__btn"
             whileHover={{ scale: 1.05, backgroundColor: '#1a4332' }}
             whileTap={{ scale: 0.96 }}
+            onClick={() => setCurrentPage('Reservation')}
           >
             Book Now
           </motion.button>
         ) : (
-          <span className="bento-card__link">
+          <span 
+            className="bento-card__link" 
+            onClick={() => setCurrentPage('Reservation')}
+            style={{ cursor: 'pointer' }}
+          >
             Book Now <ChevronRight size={13} strokeWidth={2.5} />
           </span>
         )}
@@ -267,13 +272,13 @@ export default function Activities({ setCurrentPage }) {
           {/* Bento grid */}
           <div className="bento-grid">
             {/* Large card — left tall */}
-            <BentoCard activity={bentoActivities[0]} index={0} />
+            <BentoCard activity={bentoActivities[0]} index={0} setCurrentPage={setCurrentPage} />
             {/* Medium card — top right */}
-            <BentoCard activity={bentoActivities[1]} index={1} />
+            <BentoCard activity={bentoActivities[1]} index={1} setCurrentPage={setCurrentPage} />
             {/* Small cards — bottom right, wrapped in sub-grid */}
             <div className="bento-smalls">
-              <BentoCard activity={bentoActivities[2]} index={2} />
-              <BentoCard activity={bentoActivities[3]} index={3} />
+              <BentoCard activity={bentoActivities[2]} index={2} setCurrentPage={setCurrentPage} />
+              <BentoCard activity={bentoActivities[3]} index={3} setCurrentPage={setCurrentPage} />
             </div>
           </div>
         </div>
@@ -320,7 +325,12 @@ export default function Activities({ setCurrentPage }) {
                   <span>👤 {activity.age}</span>
                   <span>⏱️ {activity.duration}</span>
                 </div>
-                <button className="adr-card__btn">Book Now</button>
+                <button 
+                  className="adr-card__btn"
+                  onClick={() => setCurrentPage('Reservation')}
+                >
+                  Book Now
+                </button>
               </div>
             </motion.div>
           ))}
