@@ -114,7 +114,7 @@ export default function Home({ currentPage, setCurrentPage }) {
               <p className="home-about__text">
                 It offers a variety of experiences, blending adrenaline and relaxation, with main activities such as zip-lining, horseback riding, a swimming pool, and paintball, as well as services for private events and group outings.
               </p>
-              <button className="home-about__btn">Learn More</button>
+              <button className="home-about__btn" onClick={() => setCurrentPage('Contact Us')}>Learn More</button>
             </div>
           </div>
         </section>
@@ -126,7 +126,7 @@ export default function Home({ currentPage, setCurrentPage }) {
         <WhyChooseUs />
 
         {/* ── Discover Our World ── */}
-        <DiscoverSection />
+        <DiscoverSection setCurrentPage={setCurrentPage} />
 
         {/* ── Testimonials ── */}
         <TestimonialsSection />

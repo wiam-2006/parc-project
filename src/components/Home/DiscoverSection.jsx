@@ -8,7 +8,7 @@ const galleryImages = [
   { src: '/discover-rock-wall.png', alt: 'Rock climbing wall',           className: 'discover-img--bot-right' },
 ];
 
-export default function DiscoverSection() {
+export default function DiscoverSection({ setCurrentPage }) {
   return (
     <section className="discover-section" id="discover-world" aria-label="Discover Our World">
 
@@ -33,7 +33,13 @@ export default function DiscoverSection() {
 
       {/* CTA */}
       <div className="discover-cta">
-        <button className="discover-btn" id="discover-learn-more-btn">Learn More</button>
+        <button 
+          className="discover-btn" 
+          id="discover-learn-more-btn"
+          onClick={() => setCurrentPage('Activities')}
+        >
+          Learn More
+        </button>
       </div>
     </section>
   );

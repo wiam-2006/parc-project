@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import Home from './components/Home/Home';
 import Hero from './components/Hero';
+import Activities from './components/Activities';
 import ContactSection from './components/Contact/ContactSection';
 import ActivitiesSection from './components/Contact/ActivitiesSection';
 import Footer from './components/Footer';
@@ -38,7 +39,7 @@ function App() {
       case 'Confirmation':
         return <ConfirmationSection />;
       case 'Activities':
-        return <ActivitiesSection setCurrentPage={setCurrentPage} />;
+        return <Activities setCurrentPage={setCurrentPage} />;
       case 'Contact Us':
         return (
           <>
