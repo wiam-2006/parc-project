@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Ticket, CreditCard, ChevronDown, AlertCircle, ArrowRight, MapPin, Star, Shield, Lock, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Calendar, Ticket, CreditCard, ChevronDown, AlertCircle, ArrowRight, MapPin, Star, Shield, Lock, CheckCircle, Loader2 } from 'lucide-react';
+import axios from 'axios';
 import './ConfirmationSection.css';
 
 // --- Validation helpers ---
@@ -17,16 +18,21 @@ const isValidCVV        = (v) => /^\d{3,4}$/.test(v.trim());
 const isNotEmpty        = (v) => v.trim().length >= 2;
 const isValidPostal     = (v) => /^[a-zA-Z0-9\s\-]{4,10}$/.test(v.trim());
 
-const ConfirmationSection = ({ onBack, bookingData }) => {
+const ConfirmationSection = ({ onBack, onFinish, bookingData }) => {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('online'); // 'online' or 'local'
 
-  const { selectedDate, adults, children } = bookingData || { selectedDate: new Date(), adults: 2, children: 0 };
+  const { selectedDate, adults, children, activity, name, email, phone, activeTime } = bookingData || { 
+    selectedDate: new Date(), adults: 2, children: 0, activity: null 
+  };
   const totalTickets = adults + children;
 
   // Format date: "15 May, 2026"
   const formattedDate = selectedDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-  const adultPrice = 150;
-  const childPrice = 75;
+  const adultPrice = Number(activity?.adult_price || 0);
+  const childPrice = Number(activity?.child_price || 0);
 
   // --- Payment form state ---
   const [cardNumber, setCardNumber] = useState('');
@@ -42,14 +48,14 @@ const ConfirmationSection = ({ onBack, bookingData }) => {
   const touch = (field) => setTouched((p) => ({ ...p, [field]: true }));
 
   const errors = useMemo(() => ({
-    cardNumber: !isValidCardNumber(cardNumber) ? 'Enter a valid card number (13–19 digits).' : '',
-    expiry:     !isValidExpiry(expiry)         ? 'Enter a valid expiry date (MM/YY).' : '',
-    cvv:        !isValidCVV(cvv)               ? 'CVV must be 3 or 4 digits.' : '',
+    cardNumber: (paymentMethod === 'online' && !isValidCardNumber(cardNumber)) ? 'Enter a valid card number (13–19 digits).' : '',
+    expiry:     (paymentMethod === 'online' && !isValidExpiry(expiry))         ? 'Enter a valid expiry date (MM/YY).' : '',
+    cvv:        (paymentMethod === 'online' && !isValidCVV(cvv))               ? 'CVV must be 3 or 4 digits.' : '',
     billName:   !isNotEmpty(billName)          ? 'Full name is required.' : '',
     street:     !isNotEmpty(street)            ? 'Street address is required.' : '',
     city:       !isNotEmpty(city)              ? 'City is required.' : '',
     postal:     !isValidPostal(postal)         ? 'Enter a valid postal code.' : '',
-  }), [cardNumber, expiry, cvv, billName, street, city, postal]);
+  }), [cardNumber, expiry, cvv, billName, street, city, postal, paymentMethod]);
 
   const isFormValid = Object.values(errors).every((e) => e === '');
 
@@ -67,11 +73,45 @@ const ConfirmationSection = ({ onBack, bookingData }) => {
     setExpiry(raw);
   };
 
-  const handleSubmit = () => {
-    const allFields = { cardNumber: true, expiry: true, cvv: true, billName: true, street: true, city: true, postal: true };
+  const handleSubmit = async () => {
+    const allFields = { billName: true, street: true, city: true, postal: true };
+    if (paymentMethod === 'online') {
+      allFields.cardNumber = true;
+      allFields.expiry = true;
+      allFields.cvv = true;
+    }
     setTouched(allFields);
     if (!isFormValid) return;
-    setIsSuccess(true);
+
+    setLoading(true);
+    setError('');
+
+    const finalData = {
+      name,
+      email,
+      phone,
+      selectedDate: new Date(selectedDate).toISOString().split('T')[0],
+      activeTime,
+      adults,
+      children,
+      activity_id: activity?.id,
+      street,
+      city,
+      postal_code: postal,
+      payment_method: paymentMethod
+    };
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/bookings', finalData);
+      if (response.data.success) {
+        setIsSuccess(true);
+      }
+    } catch (err) {
+      console.error("Final booking error:", err);
+      setError('Something went wrong during confirmation. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (isSuccess) {
@@ -108,7 +148,7 @@ const ConfirmationSection = ({ onBack, bookingData }) => {
           </p>
 
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => onFinish ? onFinish() : window.location.reload()}
             style={{
               padding: '1rem 2.5rem',
               background: '#1b5e40',
@@ -172,62 +212,77 @@ const ConfirmationSection = ({ onBack, bookingData }) => {
             <h3 className="checkout-card-title">Payment Method</h3>
             <div className="form-row">
               <div>
-                <label className="form-label">Select Card</label>
+                <label className="form-label">How would you like to pay?</label>
                 <div className="form-select-wrapper">
                   <CreditCard className="form-select-icon" size={18} />
-                  <select className="form-input form-select" defaultValue="credit">
-                    <option value="credit">Credit or debit card</option>
+                  <select 
+                    className="form-input form-select" 
+                    value={paymentMethod}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  >
+                    <option value="online">Pay Online (Card)</option>
+                    <option value="local">Pay at the Park (Upon arrival)</option>
                   </select>
                   <ChevronDown className="select-chevron" size={16} />
                 </div>
               </div>
             </div>
-            <div className="form-row">
-              <div>
-                <label className="form-label" htmlFor="card-number">Card Number <span className="required-star">*</span></label>
-                <input
-                  id="card-number"
-                  type="text"
-                  inputMode="numeric"
-                  className={`form-input ${touched.cardNumber && errors.cardNumber ? 'input-error' : touched.cardNumber && !errors.cardNumber ? 'input-valid' : ''}`}
-                  placeholder="**** **** **** ****"
-                  value={cardNumber}
-                  onChange={handleCardNumberChange}
-                  onBlur={() => touch('cardNumber')}
-                />
-                {touched.cardNumber && errors.cardNumber && <span className="field-error">{errors.cardNumber}</span>}
-              </div>
-            </div>
-            <div className="form-row">
-              <div>
-                <label className="form-label" htmlFor="card-expiry">Expiration Date (MM/YY) <span className="required-star">*</span></label>
-                <input
-                  id="card-expiry"
-                  type="text"
-                  inputMode="numeric"
-                  className={`form-input ${touched.expiry && errors.expiry ? 'input-error' : touched.expiry && !errors.expiry ? 'input-valid' : ''}`}
-                  placeholder="MM / YY"
-                  value={expiry}
-                  onChange={handleExpiryChange}
-                  onBlur={() => touch('expiry')}
-                />
-                {touched.expiry && errors.expiry && <span className="field-error">{errors.expiry}</span>}
-              </div>
-              <div>
-                <label className="form-label" htmlFor="card-cvv">CVV <span className="required-star">*</span></label>
-                <input
-                  id="card-cvv"
-                  type="text"
-                  inputMode="numeric"
-                  className={`form-input ${touched.cvv && errors.cvv ? 'input-error' : touched.cvv && !errors.cvv ? 'input-valid' : ''}`}
-                  placeholder="***"
-                  value={cvv}
-                  onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                  onBlur={() => touch('cvv')}
-                />
-                {touched.cvv && errors.cvv && <span className="field-error">{errors.cvv}</span>}
-              </div>
-            </div>
+
+            {paymentMethod === 'online' && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                style={{ overflow: 'hidden' }}
+              >
+                <div className="form-row" style={{ marginTop: '1rem' }}>
+                  <div>
+                    <label className="form-label" htmlFor="card-number">Card Number <span className="required-star">*</span></label>
+                    <input
+                      id="card-number"
+                      type="text"
+                      inputMode="numeric"
+                      className={`form-input ${touched.cardNumber && errors.cardNumber ? 'input-error' : touched.cardNumber && !errors.cardNumber ? 'input-valid' : ''}`}
+                      placeholder="**** **** **** ****"
+                      value={cardNumber}
+                      onChange={handleCardNumberChange}
+                      onBlur={() => touch('cardNumber')}
+                    />
+                    {touched.cardNumber && errors.cardNumber && <span className="field-error">{errors.cardNumber}</span>}
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div>
+                    <label className="form-label" htmlFor="card-expiry">Expiration Date (MM/YY) <span className="required-star">*</span></label>
+                    <input
+                      id="card-expiry"
+                      type="text"
+                      inputMode="numeric"
+                      className={`form-input ${touched.expiry && errors.expiry ? 'input-error' : touched.expiry && !errors.expiry ? 'input-valid' : ''}`}
+                      placeholder="MM / YY"
+                      value={expiry}
+                      onChange={handleExpiryChange}
+                      onBlur={() => touch('expiry')}
+                    />
+                    {touched.expiry && errors.expiry && <span className="field-error">{errors.expiry}</span>}
+                  </div>
+                  <div>
+                    <label className="form-label" htmlFor="card-cvv">CVV <span className="required-star">*</span></label>
+                    <input
+                      id="card-cvv"
+                      type="text"
+                      inputMode="numeric"
+                      className={`form-input ${touched.cvv && errors.cvv ? 'input-error' : touched.cvv && !errors.cvv ? 'input-valid' : ''}`}
+                      placeholder="***"
+                      value={cvv}
+                      onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                      onBlur={() => touch('cvv')}
+                    />
+                    {touched.cvv && errors.cvv && <span className="field-error">{errors.cvv}</span>}
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
 
           {/* Billing Address Card */}
@@ -304,14 +359,23 @@ const ConfirmationSection = ({ onBack, bookingData }) => {
             </div>
           </div>
 
+          {error && <div style={{ color: '#e53e3e', marginBottom: '1rem', fontWeight: '600' }}>{error}</div>}
+
           {/* Action Button */}
           <button
-            className={`checkout-action-btn ${!isFormValid ? 'checkout-action-btn-disabled' : ''}`}
+            className={`checkout-action-btn ${!isFormValid || loading ? 'checkout-action-btn-disabled' : ''}`}
             onClick={handleSubmit}
-            aria-disabled={!isFormValid}
+            disabled={loading}
+            aria-disabled={!isFormValid || loading}
             title={!isFormValid ? 'Please complete all required fields.' : undefined}
           >
-            Confirm and Book <ArrowRight size={18} />
+            {loading ? (
+              <span style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
+                <Loader2 className="animate-spin" size={18} /> Processing...
+              </span>
+            ) : (
+              <>Confirm and Book <ArrowRight size={18} /></>
+            )}
           </button>
           <div className="terms-text">
             By clicking "Confirm and Book", you agree to FunZone<br />
@@ -324,10 +388,10 @@ const ConfirmationSection = ({ onBack, bookingData }) => {
         <div className="checkout-right">
           <div className="right-summary-card">
             <div className="summary-img-wrapper">
-              <img src="/camping.png" alt="Campground" />
+              <img src={activity?.image || "/camping.png"} alt={activity?.title || "Campground"} />
             </div>
             <div className="summary-content">
-              <div className="summary-park-title">Funzone – Full Day Access</div>
+              <div className="summary-park-title">{activity?.title || "Funzone – Full Day Access"}</div>
               <div className="summary-meta">
                 <div className="summary-meta-item">
                   <MapPin size={14} /> Tangier, Morocco

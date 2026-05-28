@@ -1,14 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Clock, PlusCircle, MinusCircle, User, HeadphonesIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, PlusCircle, MinusCircle, User, HeadphonesIcon, Loader2 } from 'lucide-react';
+import axios from 'axios'; // 1. استيراد اكسيوس
 import './Booking.css';
 
 // --- Validation helpers ---
-const isValidName  = (v) => v.trim().length >= 2;
+const isValidName = (v) => v.trim().length >= 2;
 const isValidPhone = (v) => /^[+]?[\d\s\-().]{8,20}$/.test(v.trim());
 const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
-const BookingSection = ({ onConfirm }) => {
+const BookingSection = ({ onConfirm, selectedActivity }) => {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -16,15 +17,19 @@ const BookingSection = ({ onConfirm }) => {
   const [activeTime, setActiveTime] = useState('09:00');
 
   // Controlled form fields
-  const [name,  setName]  = useState('');
+  const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+
+  // 2. States للتحكم في حالة الطلب والرسائل
+  const [loading, setLoading] = useState(false);
+  const [serverMessage, setServerMessage] = useState({ type: '', text: '' });
 
   // Track which fields have been touched (blurred) for error display
   const [touched, setTouched] = useState({ name: false, phone: false, email: false });
 
   const errors = useMemo(() => ({
-    name:  !isValidName(name)  ? 'Please enter your full name (at least 2 characters).' : '',
+    name: !isValidName(name) ? 'Please enter your full name (at least 2 characters).' : '',
     phone: !isValidPhone(phone) ? 'Please enter a valid phone number.' : '',
     email: !isValidEmail(email) ? 'Please enter a valid email address.' : '',
   }), [name, phone, email]);
@@ -33,11 +38,25 @@ const BookingSection = ({ onConfirm }) => {
 
   const handleBlur = (field) => setTouched((prev) => ({ ...prev, [field]: true }));
 
+  // 3. دالة إرسال البيانات للـ Laravel API
   const handleConfirm = () => {
-    // Mark all fields touched to reveal any hidden errors
     setTouched({ name: true, phone: true, email: true });
     if (!isFormValid) return;
-    onConfirm({ selectedDate, adults, children, name, phone, email });
+
+    // تجميع البيانات لإرسالها بالشكل الصحيح لي كيتوقعو الباكند
+    const bookingData = {
+      name,
+      email,
+      phone,
+      selectedDate,
+      activeTime,
+      adults,
+      children
+    };
+
+    if (onConfirm) {
+      onConfirm(bookingData);
+    }
   };
 
   const nextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
@@ -162,6 +181,7 @@ const BookingSection = ({ onConfirm }) => {
                 key={time}
                 className={`time-btn ${activeTime === time ? 'active' : ''}`}
                 onClick={() => handleTimeClick(time)}
+                disabled={loading}
               >
                 {activeTime === time && <Clock size={18} />} {time}
               </button>
@@ -189,19 +209,19 @@ const BookingSection = ({ onConfirm }) => {
                 </div>
                 <div>
                   <div className="counter-title">Adults</div>
-                  <div className="counter-price">150DH / person</div>
+                  <div className="counter-price">{Number(selectedActivity?.adult_price || 0)}DH / person</div>
                 </div>
               </div>
               <div className="counter-controls">
                 <button
                   className={`counter-btn ${adults <= 1 ? 'disabled' : ''}`}
                   onClick={() => setAdults(Math.max(1, adults - 1))}
-                  disabled={adults <= 1}
+                  disabled={adults <= 1 || loading}
                 >
                   <MinusCircle size={20} />
                 </button>
                 <span className="counter-value">{adults}</span>
-                <button className="counter-btn" onClick={() => setAdults(adults + 1)}>
+                <button className="counter-btn" onClick={() => setAdults(adults + 1)} disabled={loading}>
                   <PlusCircle size={20} />
                 </button>
               </div>
@@ -214,19 +234,19 @@ const BookingSection = ({ onConfirm }) => {
                 </div>
                 <div>
                   <div className="counter-title">Children</div>
-                  <div className="counter-price">75DH / person</div>
+                  <div className="counter-price">{Number(selectedActivity?.child_price || 0)}DH / person</div>
                 </div>
               </div>
               <div className="counter-controls">
                 <button
                   className={`counter-btn ${children <= 0 ? 'disabled' : ''}`}
                   onClick={() => setChildren(Math.max(0, children - 1))}
-                  disabled={children <= 0}
+                  disabled={children <= 0 || loading}
                 >
                   <MinusCircle size={20} />
                 </button>
                 <span className="counter-value">{children}</span>
-                <button className="counter-btn" onClick={() => setChildren(children + 1)}>
+                <button className="counter-btn" onClick={() => setChildren(children + 1)} disabled={loading}>
                   <PlusCircle size={20} />
                 </button>
               </div>
@@ -252,6 +272,7 @@ const BookingSection = ({ onConfirm }) => {
               <input
                 id="booking-name"
                 type="text"
+                disabled={loading}
                 className={`form-input ${touched.name && errors.name ? 'input-error' : touched.name && !errors.name ? 'input-valid' : ''}`}
                 placeholder="Funzone Park Junior"
                 value={name}
@@ -265,6 +286,7 @@ const BookingSection = ({ onConfirm }) => {
               <input
                 id="booking-phone"
                 type="tel"
+                disabled={loading}
                 className={`form-input ${touched.phone && errors.phone ? 'input-error' : touched.phone && !errors.phone ? 'input-valid' : ''}`}
                 placeholder="+212 6 00 00 00 00"
                 value={phone}
@@ -278,6 +300,7 @@ const BookingSection = ({ onConfirm }) => {
               <input
                 id="booking-email"
                 type="email"
+                disabled={loading}
                 className={`form-input ${touched.email && errors.email ? 'input-error' : touched.email && !errors.email ? 'input-valid' : ''}`}
                 placeholder="funzone@park.com"
                 value={email}
@@ -299,42 +322,61 @@ const BookingSection = ({ onConfirm }) => {
       >
         <div className="summary-container">
           <div className="summary-card">
-            <img src="/camping.png" alt="Camping at Funzone" className="summary-img" />
+            <img 
+              src={selectedActivity?.image || "/camping.png"} 
+              alt={selectedActivity?.title || "Camping at Funzone"} 
+              className="summary-img" 
+            />
             <div className="summary-content">
-              <span className="tag">High Sensation</span>
-              <h3 className="summary-title">The Hercules Leap</h3>
+              {selectedActivity?.badge && <span className="tag">{selectedActivity.badge}</span>}
+              <h3 className="summary-title">{selectedActivity?.title || "Standard Entry"}</h3>
               <div className="stars">
                 ★★★★★ <span className="reviews">4.9 (1,200 reviews)</span>
               </div>
               <p className="summary-desc">
-                Campfire tales and starry nights at Lana Parc. Creating memories that will last a lifetime under the open sky
+                {selectedActivity?.description || "Experience the magic of Funzone Park with this curated adventure designed for all ages."}
               </p>
 
               <div className="price-breakdown">
+                {/* 1. Ticket Calculation & Display logic update */}
                 <div className="price-row">
-                  <span>Adult Ticket (x{adults})</span>
-                  <span style={{ fontWeight: 600 }}>{adults * 150}DH</span>
+                  <span>Adult Tickets ({adults} x {Number(selectedActivity?.adult_price || 0)}DH)</span>
+                  <span style={{ fontWeight: 600 }}>{adults * Number(selectedActivity?.adult_price || 0)}DH</span>
                 </div>
-                {children > 0 && (
-                  <div className="price-row">
-                    <span>Child Ticket (x{children})</span>
-                    <span style={{ fontWeight: 600 }}>{children * 75}DH</span>
-                  </div>
-                )}
-                <div className="price-row total">
-                  <span>Total</span>
-                  <span className="total-price">{adults * 150 + children * 75}DH</span>
+                <div className="price-row">
+                  <span>Child Tickets ({children} x {Number(selectedActivity?.child_price || 0)}DH)</span>
+                  <span style={{ fontWeight: 600 }}>{children * Number(selectedActivity?.child_price || 0)}DH</span>
+                </div>
+                <div className="price-row total" style={{ marginTop: '1.5rem', borderTop: '2px solid #eee', paddingTop: '1rem' }}>
+                  <span>Grand Total</span>
+                  <span className="total-price" style={{ color: '#1b5e40', fontSize: '1.5rem' }}>
+                    {(adults * Number(selectedActivity?.adult_price || 0)) + (children * Number(selectedActivity?.child_price || 0))}DH
+                  </span>
                 </div>
               </div>
 
+              {/* 4. عرض رسائل النجاح أو الفشل فوق الزر */}
+              {serverMessage.text && (
+                <div className={`server-message ${serverMessage.type}`}>
+                  {serverMessage.text}
+                </div>
+              )}
+
               <button
-                className={`confirm-btn ${!isFormValid ? 'confirm-btn-disabled' : ''}`}
+                className={`confirm-btn ${!isFormValid || loading ? 'confirm-btn-disabled' : ''}`}
                 onClick={handleConfirm}
-                disabled={false}  /* disabled via CSS only so the click still shows errors */
-                aria-disabled={!isFormValid}
+                disabled={loading}
+                aria-disabled={!isFormValid || loading}
                 title={!isFormValid ? 'Please fill in all required fields correctly.' : undefined}
               >
-                Confirm the booking
+                {/* تغيير شكل الزر أثناء التحميل */}
+                {loading ? (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
+                    <Loader2 className="animate-spin" size={18} /> Processing...
+                  </span>
+                ) : (
+                  'Confirm the booking'
+                )}
               </button>
               <div className="secure-payment">
                 100% SECURE PAYMENT

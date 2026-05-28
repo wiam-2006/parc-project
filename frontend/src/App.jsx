@@ -10,36 +10,43 @@ import Memberships from './components/Memberships';
 import BookingSection from './components/booking/BookingSection';
 import ConfirmationSection from './components/booking/ConfirmationSection';
 import Restaurant from './components/Restaurant';
+import Events from './components/Events';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('Home');
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState(null);
   const [bookingData, setBookingData] = useState({ selectedDate: new Date(), adults: 2, children: 0 });
 
-  // ── Home page ──────────────────────────────────────────────────────────────
-  if (currentPage === 'Home') {
-    return (
-      <Home
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
-    );
-  }
+  const handleBookNow = (activity) => {
+    setSelectedActivity(activity);
+    setCurrentPage('Reservation');
+  };
 
   const renderPage = () => {
     switch (currentPage) {
       case 'Home':
-        return <Home />; // All content removed from Home as requested
+        return <Home setCurrentPage={setCurrentPage} onBookActivity={handleBookNow} />;
       case 'Memberships':
         return <Memberships setCurrentPage={setCurrentPage} />;
       case 'Restaurant':
         return <Restaurant />;
       case 'Reservation':
-        return <BookingSection />;
+        return (
+          <BookingSection 
+            selectedActivity={selectedActivity} 
+            onConfirm={(data) => {
+              setBookingData({ ...data, activity: selectedActivity });
+              setCurrentPage('Confirmation');
+            }} 
+          />
+        );
       case 'Confirmation':
-        return <ConfirmationSection />;
+        return <ConfirmationSection onBack={() => setCurrentPage('Reservation')} onFinish={() => setCurrentPage('Activities')} bookingData={bookingData} />;
       case 'Activities':
-        return <Activities setCurrentPage={setCurrentPage} />;
+        return <Activities setCurrentPage={setCurrentPage} onBookActivity={handleBookNow} />;
+      case 'Events':
+        return <Events />;
       case 'Contact Us':
         return (
           <>
@@ -49,11 +56,7 @@ function App() {
           </>
         );
       default:
-        return (
-          <>
-            <Home />
-          </>
-        );
+        return <Home setCurrentPage={setCurrentPage} onBookActivity={handleBookNow} />;
     }
   };
 
@@ -64,29 +67,6 @@ function App() {
         {renderPage()}
       </main>
       {currentPage !== 'Home' && <Footer />}
-    </div>
-  );
-
-  // ── Booking / Confirmation pages ───────────────────────────────────────────
-  return (
-    <div className="app-container">
-      <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      <Hero />
-      {!isConfirmed ? (
-        <>
-          <SecondarySection />
-          <BookingSection onConfirm={(data) => {
-            setBookingData(data);
-            setIsConfirmed(true);
-          }} />
-        </>
-      ) : (
-        <ConfirmationSection
-          onBack={() => setIsConfirmed(false)}
-          bookingData={bookingData}
-        />
-      )}
-      <Footer />
     </div>
   );
 }

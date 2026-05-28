@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../Header';   
+import Header from '../Header';
 import Footer from '../Footer';
 import ActivitiesSection from './ActivitiesSection';
 import WhyChooseUs from './WhyChooseUs';
@@ -18,7 +18,7 @@ const STATS = [
 
 
 /* ─── Component ───────────────────────────────────────────────────────────── */
-export default function Home({ currentPage, setCurrentPage }) {
+export default function Home({ currentPage, setCurrentPage, onBookActivity }) {
   const handleBookNow = (e) => {
     e.preventDefault();
     setCurrentPage?.('Home');          // stay on current page and let the user scroll to booking
@@ -120,7 +120,7 @@ export default function Home({ currentPage, setCurrentPage }) {
         </section>
 
         {/* ── Activities ── */}
-        <ActivitiesSection />
+        <ActivitiesSection onBookActivity={onBookActivity} />
 
         {/* ── Why Choose Us ── */}
         <WhyChooseUs />

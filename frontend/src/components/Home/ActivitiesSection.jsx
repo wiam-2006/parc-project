@@ -25,7 +25,7 @@ const activities = [
   { id: 10, title: "Horse Riding", price: "300 DH", image: image10, alt: "Horse Riding" },
 ];
 
-export default function ActivitiesSection() {
+export default function ActivitiesSection({ onBookActivity }) {
   const [hovered, setHovered] = useState(null);
   const scrollRef = useRef(null);
 
@@ -74,10 +74,18 @@ export default function ActivitiesSection() {
                 />
               </div>
               <div className="card-body">
-                <p className="card-title">{act.title}</p>
-                <p className="card-price">
-                  Price : <strong>{act.price}</strong>
-                </p>
+                <p className="card-title" style={{ fontSize: '20px' }}>{act.title}</p>
+                <div>
+                  <p className="card-price" style={{ padding: '15px' }}>
+                    Price : <strong>{act.price}</strong>
+                  </p>
+                  <p style={{ padding: '5px' }}></p>
+                  <button
+                    onClick={() => onBookActivity?.(act)}
+                    style={{ background: '#1b5e40', color: '#fff', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '8px', fontSize: '0.8rem', cursor: 'pointer' }}>
+                    Book Now
+                  </button>
+                </div>
               </div>
             </div>
           ))}
