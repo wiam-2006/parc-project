@@ -5,7 +5,7 @@ import './Hero.css';
 export default function Hero() {
   return (
     <section className="hero">
-      <motion.div 
+      <motion.div
         className="hero__image-wrap"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -14,7 +14,7 @@ export default function Hero() {
         <img src="/premium_photo-1675039871605-eb156cc0575d.avif" alt="Funzone Park tropical landscape" className="hero__img" />
         <div className="hero__overlay" />
         <div className="hero__content">
-          <motion.h1 
+          <motion.h1
             className="hero__title"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -22,7 +22,7 @@ export default function Hero() {
           >
             Contact Us
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="hero__subtitle"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

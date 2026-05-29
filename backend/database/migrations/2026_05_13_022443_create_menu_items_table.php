@@ -14,6 +14,7 @@ return new class extends Migration
     $table->string('price');
     $table->string('category');
     $table->boolean('available')->default(true);
+    $table->integer('order')->default(0);
     $table->timestamps();
 });
     }

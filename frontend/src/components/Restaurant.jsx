@@ -5,11 +5,12 @@ import { Leaf, Sun } from 'lucide-react';
 export default function Restaurant() {
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  console.log("RESTAURANT COMPONENT LOADED"); 
- useEffect(() => {
+
+  console.log("RESTAURANT COMPONENT LOADED");
+  useEffect(() => {
     console.log("FETCHING MENU...");
-    fetch('http://localhost/Funzone-park/backend/public/index.php/api/menu-items')
+    fetch('http://localhost/Funzone-park/backend/public/api/menu-items')
+      // fetch('http://localhost/Funzone-park/backend/public/index.php/api/menu-items')
       .then(res => res.json())
       .then(data => {
         console.log("MENU DATA:", data);
@@ -27,50 +28,53 @@ export default function Restaurant() {
 
   return (
     <div className="w-full min-h-screen bg-[#eef5eb] pt-20 pb-20 px-6 flex flex-col items-center">
-      
+
       {/* Hero Section Container */}
-      <section className="relative w-full max-w-[1100px] mt-10">
+      <section className="relative w-full max-w-[1200px] mt-10" style={{ marginTop: '82px' }}>
         <div className="absolute -bottom-12 -right-12 w-full h-full bg-[#1b4332] rounded-[60px] z-0" />
         <div className="relative w-full h-[450px] rounded-[60px] overflow-hidden shadow-2xl z-10">
-          <img 
-            src="/premium_photo-1663090914375-740c1ed3c0bd.avif" 
-            alt="Forest Dining Restaurant" 
+          <img
+            src="/premium_photo-1663090914375-740c1ed3c0bd.avif"
+            alt="Forest Dining Restaurant"
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/35" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="flex items-center gap-3 mb-4"
+              style={{ marginBottom: '15px' }}
             >
               <Leaf size={20} className="text-[#8ccb8c] -scale-x-100" strokeWidth={2.5} />
               <span className="text-lg md:text-xl font-medium tracking-wide">Forest Dining</span>
               <Leaf size={20} className="text-[#8ccb8c]" strokeWidth={2.5} />
             </motion.div>
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
               className="text-6xl md:text-8xl font-cursive mb-6 drop-shadow-lg"
-              style={{ fontFamily: "'Dancing Script', cursive" }}
+              style={{ fontFamily: "'Dancing Script', cursive", marginTop: '15px' }}
             >
               Dine in Nature
             </motion.h1>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
               className="text-base md:text-lg max-w-xl mb-10 text-white/90 font-medium leading-relaxed"
+              style={{ margin: '15px' }}
             >
               Where the whisper of pines meets the warmth of fire-grilled meals
             </motion.p>
             <motion.button
               onClick={() => document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' })}
-              whileHover={{ scale: 1.05, backgroundColor: '#1b4332' }}
+              whileHover={{ scale: 1.05, backgroundColor: '#327358ff' }}
               whileTap={{ scale: 0.95 }}
               className="px-10 py-4 bg-[#2D5A27] text-white rounded-full font-bold text-lg shadow-xl transition-all"
+              style={{ padding: '15px 15px', margin: '20px' }}
             >
               Explore our menu
             </motion.button>
@@ -81,37 +85,37 @@ export default function Restaurant() {
       <div className="w-full h-16 md:h-20" aria-hidden="true" />
 
       {/* Outdoor Dining Details Section */}
-      <section className="w-full max-w-[1100px] flex flex-col md:flex-row items-center gap-16 md:gap-24">
-        <div className="relative w-full md:w-[450px]">
-          <motion.div 
+      <section className="w-full max-w-[1200px] flex flex-col md:flex-row items-center gap-16 md:gap-24" style={{ margin: '120px' }}>
+        <div className="relative w-full md:w-[500px]">
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="relative w-full h-[680px] rounded-tr-[120px] rounded-bl-[120px] overflow-hidden shadow-xl"
           >
-            <img 
-              src="/istockphoto-1469750398-612x612.webp" 
-              alt="Outdoor Dining Table" 
+            <img
+              src="/istockphoto-1469750398-612x612.webp"
+              alt="Outdoor Dining Table"
               className="w-full h-full object-cover"
             />
           </motion.div>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.6 }}
             className="absolute -bottom-16 -right-10 md:-right-20 w-full max-w-[500px] bg-[#1b4332] text-white p-12 md:p-14 rounded-[60px] shadow-[0_30px_60px_rgba(0,0,0,0.4)] z-20 min-h-[250px] flex flex-col justify-center"
           >
-            <h4 className="text-3xl font-bold mb-5">The Forest Table</h4>
-            <p className="text-lg text-white/90 leading-relaxed">
+            <h4 className="text-3xl font-bold mb-5" style={{ marginLeft: '120px', marginTop: 0 }}>The Forest Table</h4>
+            <p className="text-lg text-white/90 leading-relaxed" style={{ marginLeft: '10px', marginRight: '10px', textAlign: 'center', padding: '15px' }}>
               Hand-crafted cedar tables placed specifically where the light hits the moss just right.
             </p>
           </motion.div>
         </div>
 
-        <div className="flex-1 text-left">
-          <motion.span 
+        <div className="flex-1 text-left" style={{ paddingTop: 0, marginTop: 0 }}>
+          <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -119,7 +123,7 @@ export default function Restaurant() {
           >
             OUTDOOR DINING
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -128,7 +132,7 @@ export default function Restaurant() {
           >
             Organic shapes, natural<br />textures.
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -140,7 +144,7 @@ export default function Restaurant() {
             intimate pockets of serenity.
           </motion.p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -153,7 +157,7 @@ export default function Restaurant() {
               </div>
               <p className="text-sm text-[#2D5A27]/70">Tables carved from fallen park timber.</p>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -173,34 +177,39 @@ export default function Restaurant() {
       <div className="w-full h-16 md:h-20" aria-hidden="true" />
 
       {/* Our Simple Menu Section */}
-      <section className="w-full max-w-[1100px] flex flex-col items-center">
+      <section className="w-full max-w-[1200px] flex flex-col items-center">
         <div className="flex items-center gap-4 mb-6">
-          <Leaf size={24} className="text-[#8ccb8c] -scale-x-100" />
-          <h2 className="text-4xl md:text-6xl font-cursive text-[#1b4332]" style={{ fontFamily: "'Dancing Script', cursive" }}>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', marginBottom: '0.5rem', fontWeight: 700 }}
+          >
+            <span className="why-leaf" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
             Our Simple Menu
-          </h2>
-          <Leaf size={24} className="text-[#8ccb8c]" />
+            <span className="why-leaf why-leaf--flip" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+          </motion.h2>
         </div>
-        <p className="text-[#2D5A27]/70 text-center max-w-lg mb-24 leading-relaxed font-medium">
+        <p className="text-[#2D5A27]/70 text-center max-w-lg mb-24 leading-relaxed font-medium" style={{ fontSize: '18px', marginBottom: '35px' }}>
           Fresh ingredients, honest cooking, and flavors that<br />celebrate the bounty of nature
         </p>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative w-full max-w-[1000px] h-[600px] rounded-[80px] overflow-hidden shadow-2xl"
+          className="relative w-full max-w-[1100px] h-[600px] rounded-[80px] overflow-hidden shadow-2xl"
         >
-          <img 
-            src="/photo-1563498169267-03f1d7a95271.avif" 
-            alt="Organic and Local Ingredients" 
+          <img
+            src="/photo-1563498169267-03f1d7a95271.avif"
+            alt="Organic and Local Ingredients"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/35" />
           <div className="absolute inset-0 flex flex-col justify-center items-center px-6 text-white text-center">
-            <span className="text-lg font-bold mb-3 opacity-90 tracking-widest">FARM TO TABLE</span>
-            <h3 className="text-5xl md:text-6xl font-bold mb-8 drop-shadow-md">Organic & Local</h3>
-            <p className="max-w-md text-lg md:text-xl text-white/90 leading-relaxed font-medium">
+            <span className="text-lg font-bold mb-3 opacity-90 tracking-widest" style={{ marginBottom: '25px' }}>FARM TO TABLE</span>
+            <h3 className="text-5xl md:text-6xl font-bold mb-8 drop-shadow-md" style={{ fontSize: '80px' }}>Organic & Local</h3>
+            <p className="max-w-md text-lg md:text-xl text-white/90 leading-relaxed font-medium" style={{ marginTop: '25px' }}>
               Every ingredient is carefully sourced from local farms and foraged from nearby forests.
             </p>
           </div>
@@ -210,30 +219,36 @@ export default function Restaurant() {
       <div className="w-full h-12 md:h-16" aria-hidden="true" />
 
       {/* The Organic Menu Listing - من DATABASE */}
-      <section id="menu-section" className="w-full max-w-[1000px] mb-40">
-        <motion.div 
+      <section id="menu-section" className="w-full max-w-[1000px] mb-30">
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          style={{ padding: '30px' }}
           className="bg-white/90 backdrop-blur-xl rounded-[60px] p-12 md:p-20 border border-[#c4dbc4] shadow-[0_30px_70px_rgba(27,67,50,0.15)]"
         >
           <div className="flex flex-col items-center mb-12">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="flex items-center gap-4 mb-6"
+              className="flex items-center gap-4 mb-6 font-cursive"
             >
-              <Leaf size={28} className="text-[#8ccb8c] -scale-x-100" />
-              <h2 className="text-4xl md:text-6xl font-cursive text-[#1b4332]" style={{ fontFamily: "'Dancing Script', cursive" }}>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', fontWeight: 700 }}
+              >
+                <span className="why-leaf" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
                 The Organic Menu
-              </h2>
-              <Leaf size={28} className="text-[#8ccb8c]" />
+                <span className="why-leaf why-leaf--flip" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+              </motion.h2>
             </motion.div>
             <div className="w-24 h-[3px] bg-gradient-to-r from-transparent via-[#8ccb8c] to-transparent rounded-full" />
           </div>
 
-          <div className="w-full h-24 md:h-32" aria-hidden="true" />
+          <div className="w-full h-12 md:h-16" aria-hidden="true" />
 
           {/* Menu من DATABASE */}
           <div className="relative grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-24">
@@ -250,10 +265,11 @@ export default function Restaurant() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
+                  style={{ padding: '15px' }}
                   transition={{ delay: index * 0.1 }}
                 >
                   <div className="flex items-center gap-4 mb-10">
-                    <h3 className="text-xl font-bold text-[#1b4332] uppercase tracking-[0.2em]">
+                    <h3 className="text-xl font-bold text-[#1a503a] uppercase tracking-[0.2em]" style={{ marginBottom: '20px', fontSize: '24px', color: '#269b6cff' }}>
                       {category}
                     </h3>
                   </div>
@@ -283,7 +299,7 @@ export default function Restaurant() {
           <div className="w-full h-16 md:h-20" aria-hidden="true" />
 
           <div className="flex flex-col items-center">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -297,6 +313,7 @@ export default function Restaurant() {
               whileHover={{ scale: 1.05, backgroundColor: '#1b4332' }}
               whileTap={{ scale: 0.95 }}
               className="relative group px-20 py-6 bg-[#2D5A27] text-white rounded-full font-bold text-xl shadow-2xl overflow-hidden transition-all flex items-center gap-4"
+              style={{ padding: '15px', margin: '15px' }}
             >
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shine" />
               <Leaf size={24} className="text-[#8ccb8c] group-hover:rotate-12 transition-transform" />
@@ -312,21 +329,21 @@ export default function Restaurant() {
       <section className="relative w-full max-w-[1100px] flex flex-col items-center mb-40">
         <div className="absolute -top-20 -left-20 w-96 h-96 bg-[#8ccb8c]/10 rounded-full blur-[100px] -z-10" />
         <div className="absolute -bottom-20 -right-20 w-[500px] h-[500px] bg-[#2D5A27]/05 rounded-full blur-[120px] -z-10" />
-        <motion.div 
+        <motion.div
           animate={{ rotate: [0, 10, -10, 0], y: [0, -10, 10, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           className="absolute -top-10 -left-10 text-[#8ccb8c]/40 -z-10"
         >
           <Sun size={120} strokeWidth={1} />
         </motion.div>
-        <motion.div 
+        <motion.div
           animate={{ y: [0, -15, 0], rotate: [0, 15, 0] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/4 -right-10 text-[#8ccb8c]/30 -z-10 hidden md:block"
         >
           <Leaf size={48} />
         </motion.div>
-        <motion.div 
+        <motion.div
           animate={{ y: [0, 15, 0], rotate: [0, -15, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute bottom-1/4 -left-16 text-[#8ccb8c]/30 -z-10 hidden md:block"
@@ -334,14 +351,19 @@ export default function Restaurant() {
           <Leaf size={64} />
         </motion.div>
         <div className="flex items-center gap-4 mb-24">
-          <Leaf size={24} className="text-[#8ccb8c] -scale-x-100" />
-          <h2 className="text-4xl md:text-6xl font-cursive text-[#1b4332]" style={{ fontFamily: "'Dancing Script', cursive" }}>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            style={{ fontFamily: 'Dancing Script', fontSize: '4rem', color: '#1a503a', marginBottom: '30px', fontWeight: 700 }}
+          >
+            <span className="why-leaf" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
             Moments in Nature
-          </h2>
-          <Leaf size={24} className="text-[#8ccb8c]" />
+            <span className="why-leaf why-leaf--flip" aria-hidden="true" style={{ margin: '15px' }}>🌿</span>
+          </motion.h2>
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 h-auto md:h-[600px]">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             whileHover={{ y: -10, rotateZ: -1, boxShadow: "0 30px 60px -12px rgba(45, 122, 79, 0.5)" }}
@@ -352,7 +374,7 @@ export default function Restaurant() {
             <div className="absolute inset-0 bg-black/10" />
           </motion.div>
           <div className="flex flex-col gap-4 h-full">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{ y: -10, scale: 1.02 }}
@@ -362,7 +384,7 @@ export default function Restaurant() {
             >
               <img src="/istockphoto-139391007-612x612.jpg" alt="Nature Detail" className="w-full h-full object-cover transition-all duration-700" />
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{ y: -10, scale: 1.02 }}
@@ -373,7 +395,7 @@ export default function Restaurant() {
               <img src="/premium_photo-1669261883156-dbf93d00f42a.avif" alt="Delicious Food" className="w-full h-full object-cover transition-all duration-700" />
             </motion.div>
           </div>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             whileHover={{ y: -10, rotateZ: 1 }}
@@ -387,17 +409,18 @@ export default function Restaurant() {
         </div>
       </section>
 
-      <div className="w-full h-40 md:h-64" aria-hidden="true" />
+      <div className="w-full h-30 md:h-64" aria-hidden="true" />
 
-      <section className="w-full max-w-[900px] mb-32 px-6">
-        <motion.div 
+      <section className="w-full max-w-[800px] mb-32 px-6">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           whileHover={{ y: -5 }}
           viewport={{ once: true }}
+          style={{ padding: '40px', marginTop: 0 }}
           className="bg-white/70 backdrop-blur-md rounded-[50px] p-10 md:p-14 text-center shadow-[0_15px_35px_rgba(45,122,79,0.15)] border border-[#2D7A4F]/30"
         >
-          <h3 className="text-2xl md:text-3xl font-medium text-[#1b4332] mb-3">
+          <h3 className="text-2xl md:text-3xl font-medium text-[#1b4332] mb-3" style={{ margin: '35px' }}>
             Questions about your visit?
           </h3>
           <p className="text-sm md:text-base text-[#2D5A27]/70 font-medium">
