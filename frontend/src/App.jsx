@@ -10,7 +10,8 @@ import Memberships from './components/Memberships';
 import BookingSection from './components/booking/BookingSection';
 import ConfirmationSection from './components/booking/ConfirmationSection';
 import Restaurant from './components/Restaurant';
-
+import AboutPage from './components/AboutPage';
+import EventsPage from './components/EventsPage';
 function App() {
   const [currentPage, setCurrentPage] = useState('Home');
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -40,6 +41,10 @@ function App() {
         return <ConfirmationSection />;
       case 'Activities':
         return <Activities setCurrentPage={setCurrentPage} />;
+      case 'About Us':
+        return <AboutPage />;  
+      case 'Events':
+        return <EventsPage />;  
       case 'Contact Us':
         return (
           <>
