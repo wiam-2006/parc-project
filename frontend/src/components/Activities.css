@@ -958,8 +958,8 @@
 }
 
 .event-card {
-  background: #1a3022;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #8fb996;
+  border-color: #8fb996;
   border-radius: 26px;
   overflow: hidden;
   display: flex;
@@ -968,7 +968,7 @@
 }
 
 .event-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(10px);
   background: #8fb996;
   border-color: #8fb996;
   box-shadow: 0 15px 35px rgba(26, 48, 34, 0.2);
@@ -998,7 +998,7 @@
 }
 
 .event-card:hover .event-card__title {
-  color: #1a3022;
+  color: #377e51;
 }
 
 .event-card__title {
@@ -1009,7 +1009,7 @@
 }
 
 .event-card:hover .event-card__desc {
-  color: #2d4a3e;
+  color: #377e51;
 }
 
 .event-card__desc {
@@ -1020,8 +1020,8 @@
 }
 
 .event-card:hover .event-card__btn {
-  border-color: #1a3022;
-  color: #1a3022;
+  border-color: #377e51;
+  color: #377e51;
 }
 
 .event-card__btn {
@@ -1040,9 +1040,9 @@
 }
 
 .event-card__btn:hover {
-  background: #1a3022;
+  background: #2c9b54;
   color: #ffffff;
-  border-color: #1a3022;
+  border-color: #2c9b54;
 }
 
 /* ── RESPONSIVE ADAPTATION ── */

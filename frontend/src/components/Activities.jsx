@@ -435,7 +435,7 @@ export default function Activities({ setCurrentPage, onBookActivity }) {
 
           <div className="events-grid">
             {data.event.length > 0 ? data.event.map((ev, i) => (
-              <div className="event-card" key={ev.id || i}>
+              <div className="event-card" key={ev.id || i} style={{ background: '#8fb996', border: '1px solid #8fb996', borderRadius: '26px', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'all 0.35s ease' }}>
                 <div className="event-card__img-wrap">
                   <img src={ev.image} alt={ev.title} />
                 </div>
