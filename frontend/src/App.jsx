@@ -10,7 +10,7 @@ import Memberships from './components/Memberships';
 import BookingSection from './components/booking/BookingSection';
 import ConfirmationSection from './components/booking/ConfirmationSection';
 import Restaurant from './components/Restaurant';
-import Events from './components/Events';
+import Events from './components/EventsPage';
 
 import AboutPage from './components/AboutPage';
 import EventsPage from './components/EventsPage';
@@ -48,7 +48,7 @@ function App() {
       case 'Activities':
         return <Activities setCurrentPage={setCurrentPage} onBookActivity={handleBookNow} />;
       case 'Events':
-        return <Events />;
+        return <EventsPage />;
         return <Activities setCurrentPage={setCurrentPage} />;
       case 'About Us':
         return <AboutPage />;
