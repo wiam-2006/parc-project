@@ -958,7 +958,7 @@
 }
 
 .event-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: #1a3022;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 26px;
   overflow: hidden;
@@ -969,9 +969,9 @@
 
 .event-card:hover {
   transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  background: #8fb996;
+  border-color: #8fb996;
+  box-shadow: 0 15px 35px rgba(26, 48, 34, 0.2);
 }
 
 .event-card__img-wrap {
@@ -997,6 +997,10 @@
   flex-direction: column;
 }
 
+.event-card:hover .event-card__title {
+  color: #1a3022;
+}
+
 .event-card__title {
   font-size: 1.25rem;
   font-weight: 700;
@@ -1004,11 +1008,20 @@
   margin-bottom: 0.6rem;
 }
 
+.event-card:hover .event-card__desc {
+  color: #2d4a3e;
+}
+
 .event-card__desc {
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.55;
   margin-bottom: 1.6rem;
+}
+
+.event-card:hover .event-card__btn {
+  border-color: #1a3022;
+  color: #1a3022;
 }
 
 .event-card__btn {
@@ -1027,9 +1040,9 @@
 }
 
 .event-card__btn:hover {
-  background: #ffffff;
-  color: #3d664c;
-  border-color: #ffffff;
+  background: #1a3022;
+  color: #ffffff;
+  border-color: #1a3022;
 }
 
 /* ── RESPONSIVE ADAPTATION ── */

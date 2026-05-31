@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
 
-const navLinks = ['Home', 'About Us', 'Activities', 'Events', 'Restaurant', 'Memberships', 'Contact Us'];
+const navLinks = ['Home', 'Activities', 'Events', 'Restaurant', 'Memberships', 'About Us', 'Contact Us'];
 
 export default function Header({ currentPage, setCurrentPage }) {
   const [scrolled, setScrolled] = useState(false);

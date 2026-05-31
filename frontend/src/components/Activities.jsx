@@ -419,12 +419,12 @@ export default function Activities({ setCurrentPage, onBookActivity }) {
       </section>
 
       {/* ── EVENTS & GROUPS (static — khassha page Contact) ── */}
-      <section className="events-section">
-        <div className="events-container">
+      <section className="events-section" >
+        <div className="events-container" style={{ padding: '50px' }}>
           <div className="events-header">
             <div className="events-header__left">
-              <h2 className="events-title">Events & Group Adventures</h2>
-              <p className="events-subtitle">
+              <h2 className="events-title" style={{ fontSize: '70px' }}>Events & Group Adventures</h2>
+              <p className="events-subtitle" style={{ fontSize: '15px' }}>
                 From team building to birthday milestones, we create kinetic memories that last a lifetime.
               </p>
             </div>
