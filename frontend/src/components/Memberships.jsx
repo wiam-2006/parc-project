@@ -40,7 +40,7 @@ const plans = [
 
 export default function Memberships({ setCurrentPage }) {
   return (
-    <div className="w-full min-h-screen font-sans bg-[#eef5eb] pb-50">
+    <div className="w-full min-h-screen font-sans pb-50">
 
       {/* Hero Section */}
       <section className="px-6 pt-32 pb-16 w-full flex justify-center relative">

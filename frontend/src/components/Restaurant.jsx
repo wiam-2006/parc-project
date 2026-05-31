@@ -27,7 +27,7 @@ export default function Restaurant() {
   }, {});
 
   return (
-    <div className="w-full min-h-screen bg-[#eef5eb] pt-20 pb-20 px-6 flex flex-col items-center">
+    <div className="w-full min-h-screen pt-20 pb-20 px-6 flex flex-col items-center">
 
       {/* Hero Section Container */}
       <section className="relative w-full max-w-[1200px] mt-10" style={{ marginTop: '82px' }}>

@@ -33,12 +33,12 @@ function App() {
         return <Restaurant />;
       case 'Reservation':
         return (
-          <BookingSection 
-            selectedActivity={selectedActivity} 
+          <BookingSection
+            selectedActivity={selectedActivity}
             onConfirm={(data) => {
               setBookingData({ ...data, activity: selectedActivity });
               setCurrentPage('Confirmation');
-            }} 
+            }}
           />
         );
       case 'Confirmation':

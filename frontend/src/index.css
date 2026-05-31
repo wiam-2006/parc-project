@@ -39,7 +39,86 @@
   --radius-lg:    24px;
   --radius-xl:    32px;
 
-  --transition:   all 0.25s ease;
+  /* Premium Design System Elevators (Organic Luxury) */
+  --p-emerald:     #0c3a21;
+  --p-emerald-velvet: linear-gradient(135deg, #0c3a21 0%, #1a4d2e 100%);
+  --p-gold:        #d4af37;
+  --p-champagne:   #f7e7ce;
+  --p-glass:       rgba(255, 255, 255, 0.7);
+  --p-glass-dark:  rgba(12, 58, 33, 0.85);
+  
+  --p-shadow-lux:  0 20px 25px -5px rgba(12, 58, 33, 0.1), 0 10px 10px -5px rgba(12, 58, 33, 0.04);
+  --p-radius:      24px;
+
+  --transition:    all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Glassmorphism Panel Utility */
+.glass-panel {
+  background: var(--p-glass);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--p-shadow-lux);
+}
+
+/* Premium Navigation Glass */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Premium Button Shine Effect */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  background: var(--p-emerald);
+  color: white;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+.btn-premium::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  transition: all 0.7s ease;
+}
+
+.btn-premium:hover::after {
+  left: 100%;
+}
+
+/* Custom Luxury Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--p-emerald);
+  border-radius: 10px;
+  border: 3px solid var(--cream-bg);
 }
 
 html { scroll-behavior: smooth; }
