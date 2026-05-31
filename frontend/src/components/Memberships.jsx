@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Leaf, UsersRound, ThumbsUp, Footprints, CheckCircle2, Sprout, TreePine, Wind } from 'lucide-react';
 import './Home/Home.css'
@@ -11,34 +11,48 @@ const stats = [
   { icon: Footprints, value: '250k+', label: 'Adventure Seekers' }
 ];
 
-const plans = [
-  {
-    name: 'Basic',
-    price: '$29/month or\n$290/year',
-    features: ['Access to 3 Adventure seekers', 'Weekday entry (Mon-Thu)', 'Basic hiking trails', 'Parking included', 'Newsletter & updates'],
-    isPopular: false,
-    btnText: 'Join to park',
-    btnClass: 'bg-[#dcecd8] text-[#1b4332] border border-[#1b4332] hover:bg-[#c5dec0]'
-  },
-  {
-    name: 'Premium',
-    price: '$79/month or\n$790/year',
-    features: ['Unlimited 7-day access', 'Premium trails & activities', 'Priority parking & entry', 'Guided nature tours (2/month)', 'Eco-wellness programs'],
-    isPopular: true,
-    btnText: 'Subscribe now',
-    btnClass: 'bg-[#1b4332] text-white hover:bg-[#0f291e]'
-  },
-  {
-    name: 'VIP',
-    price: '$149/month or\n$1,490/year',
-    features: ['All Premium benefits', 'Personal nature guide', 'Photography workshops', 'Concierge service', 'Annual retreat invitation'],
-    isPopular: false,
-    btnText: 'Go VIP',
-    btnClass: 'bg-[#dcecd8] text-[#1b4332] border border-[#1b4332] hover:bg-[#c5dec0]'
-  }
-];
 
 export default function Memberships({ setCurrentPage }) {
+  const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState(null); // null | 'success' | 'error' | 'duplicate' | 'submitting'
+
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    setNewsletterStatus('submitting');
+    fetch('http://localhost/Funzone-park/backend/public/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: newsletterEmail })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setNewsletterStatus('success');
+          setNewsletterEmail('');
+        } else {
+          setNewsletterStatus('duplicate');
+        }
+      })
+      .catch(() => setNewsletterStatus('error'));
+  };
+
+  useEffect(() => {
+    fetch('http://localhost/Funzone-park/backend/public/api/membership-plans')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setPlans(data.data);
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching membership plans:', err);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="w-full min-h-screen font-sans bg-[#eef5eb] pb-50">
 
@@ -138,7 +152,9 @@ export default function Memberships({ setCurrentPage }) {
         </div>
 
         <div className="w-full flex flex-col md:flex-row justify-center items-stretch gap-6 md:gap-8 max-w-[1150px] mx-auto">
-          {plans.map((plan, idx) => (
+          {loading ? (
+            <div className="col-span-3 text-center text-[#2D5A27] text-lg py-16">Loading plans...</div>
+          ) : plans.map((plan, idx) => (
             <motion.div
               key={plan.name}
               initial={{ opacity: 0, y: 50 }}
@@ -148,9 +164,9 @@ export default function Memberships({ setCurrentPage }) {
               whileHover={{
                 scale: 1.05,
                 y: -10,
-                boxShadow: plan.isPopular ? "0 25px 50px rgba(140,203,140,0.6)" : "0 25px 50px rgba(45,90,39,0.15)"
+                boxShadow: plan.is_popular ? "0 25px 50px rgba(140,203,140,0.6)" : "0 25px 50px rgba(45,90,39,0.15)"
               }}
-              className={`rounded-[40px] flex flex-col items-center transition-all duration-300 border-[1.5px] flex-1 w-full max-w-[380px] min-h-[600px] ${plan.isPopular
+              className={`rounded-[40px] flex flex-col items-center transition-all duration-300 border-[1.5px] flex-1 w-full max-w-[380px] min-h-[600px] ${plan.is_popular
                 ? 'bg-[#98cf98] border-[#98cf98] py-14 px-8 shadow-[0_15px_40px_rgba(45,90,39,0.25)]'
                 : 'bg-[#fbfdfb] border-[#c4dbc4] py-14 px-8 shadow-xl'
                 }`}
@@ -179,26 +195,12 @@ export default function Memberships({ setCurrentPage }) {
                 whileHover={{
                   scale: 1.05,
                   y: -4,
-                  boxShadow: plan.isPopular
-                    ? '0 16px 40px rgba(27,67,50,0.6), 0 0 0 3px rgba(140,203,140,0.4)'
-                    : '0 12px 30px rgba(45,90,39,0.25), 0 0 0 2px rgba(140,203,140,0.3)',
+                  boxShadow: '0 12px 30px rgba(45,90,39,0.25), 0 0 0 2px rgba(140,203,140,0.3)'
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className={`
-                  group relative overflow-hidden
-                  w-[80%] max-w-[340px] py-[22px] rounded-full
-                  font-bold text-[19px] tracking-wider
-                  flex items-center justify-center gap-[12px]
-                  ${plan.isPopular
-                    ? 'text-white'
-                    : 'text-[#1b4332]'
-                  }
-                `}
-                style={plan.isPopular ? {
-                  background: 'linear-gradient(145deg, #2D7A4F 0%, #1b4332 55%, #0f2920 100%)',
-                  boxShadow: '0 6px 24px rgba(27,67,50,0.45), inset 0 1px 0 rgba(255,255,255,0.12)'
-                } : {
+                className="group relative overflow-hidden w-[80%] max-w-[340px] py-[22px] rounded-full font-bold text-[19px] tracking-wider flex items-center justify-center gap-[12px] text-[#1b4332]"
+                style={{
                   background: 'linear-gradient(145deg, #f0f7ee 0%, #dcecd8 100%)',
                   boxShadow: '0 4px 16px rgba(45,90,39,0.18), inset 0 1px 0 rgba(255,255,255,0.8)',
                   border: '1.5px solid rgba(45,122,79,0.45)',
@@ -219,12 +221,9 @@ export default function Memberships({ setCurrentPage }) {
                   whileHover={{ rotate: -15, scale: 1.2 }}
                   transition={{ type: 'spring', stiffness: 400 }}
                 >
-                  {plan.isPopular
-                    ? <TreePine size={18} strokeWidth={1.8} className="text-[#8ccb8c]" />
-                    : <Sprout size={18} strokeWidth={1.8} className="text-[#2D7A4F]" />
-                  }
+                  <Sprout size={18} strokeWidth={1.8} className="text-[#2D7A4F]" />
                 </motion.span>
-                <span className="relative z-10">{plan.btnText}</span>
+                <span className="relative z-10">{plan.btn_text}</span>
               </motion.button>
             </motion.div>
           ))}
@@ -388,19 +387,35 @@ export default function Memberships({ setCurrentPage }) {
             Subscribe To Our Newsletter & Grab 30% OFF
           </h2>
 
-          <form className="nl-form" onSubmit={(e) => e.preventDefault()} style={{ margin: '25px' }}>
+          <form className="nl-form" onSubmit={handleNewsletterSubmit} style={{ margin: '25px' }}>
             <input
               type="email"
               className="nl-input"
               placeholder="Enter Your Email"
               aria-label="Email Address"
               style={{ width: '800px' }}
+              value={newsletterEmail}
+              onChange={(e) => setNewsletterEmail(e.target.value)}
               required
+              disabled={newsletterStatus === 'submitting' || newsletterStatus === 'success'}
             />
-            <button type="submit" className="nl-submit">
-              Subscribe
+            <button
+              type="submit"
+              className="nl-submit"
+              disabled={newsletterStatus === 'submitting' || newsletterStatus === 'success'}
+            >
+              {newsletterStatus === 'submitting' ? 'Subscribing...' : newsletterStatus === 'success' ? '✓ Subscribed!' : 'Subscribe'}
             </button>
           </form>
+          {newsletterStatus === 'success' && (
+            <p style={{ color: '#1b4332', fontWeight: 700, marginTop: '12px' }}>🎉 You're subscribed! Your 30% OFF is on its way.</p>
+          )}
+          {newsletterStatus === 'duplicate' && (
+            <p style={{ color: '#b45309', fontWeight: 600, marginTop: '12px' }}>This email is already subscribed.</p>
+          )}
+          {newsletterStatus === 'error' && (
+            <p style={{ color: '#dc2626', fontWeight: 600, marginTop: '12px' }}>Something went wrong. Please try again.</p>
+          )}
         </motion.div>
       </section>
 
