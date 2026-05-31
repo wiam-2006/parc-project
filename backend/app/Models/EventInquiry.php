@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reservation extends Model
+class EventInquiry extends Model
 {
     use HasFactory;
 
@@ -13,9 +13,8 @@ class Reservation extends Model
         'name',
         'email',
         'phone',
-        'date',
-        'time',
-        'guests',
-        'special_requests'
+        'event_type',
+        'preferred_date',
+        'message',
     ];
 }
