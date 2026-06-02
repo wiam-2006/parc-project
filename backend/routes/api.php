@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ImageUploadController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\MembershipPlanController;
+use App\Http\Controllers\Api\MembershipController;
 use App\Http\Controllers\Api\NewsletterController;
 
 Route::post('/contact', [ContactController::class, 'store']);
@@ -17,6 +18,7 @@ Route::post('/event-inquiries', [EventInquiryController::class, 'store']);
 Route::apiResource('menu-items', MenuItemController::class);
 Route::post('/reservations', [ReservationController::class, 'store']);
 Route::apiResource('membership-plans', MembershipPlanController::class);
+Route::post('/memberships', [MembershipController::class, 'store']);
 Route::post('/newsletter', [NewsletterController::class, 'store']);
 
 Route::get('/activities', [ActivityController::class, 'index']);

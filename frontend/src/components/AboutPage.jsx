@@ -92,24 +92,41 @@ export default function AboutPage() {
 
       {/* Header Section */}
       <section className="about-v2-header">
-        <h3 className="about-v2-subtitle animate-on-scroll fade-in">Qui Sommes-Nous?</h3>
-        <h1 className="about-v2-title animate-on-scroll fade-in delay-1">
-          AVENTURE INSPIRANTE<br />ET SOLIDARITÉ
-        </h1>
-        <p className="about-v2-desc animate-on-scroll fade-in delay-2">
-          Niché au cœur de la forêt de Tanger, notre parc est un véritable havre de
-          nature et d'aventure. Offrant une vue imprenable sur la mer et la forêt, nous
-          proposons une large gamme d'activités pour tous les âges : tyroliennes,
-          équitation, piscine panoramique, trampolines, paintball, ferme
-          pédagogique, des parcs pour enfants ainsi que des balades en quad et
-          buggy pour une dose d'adrénaline.
-        </p>
-        <p className="about-v2-desc animate-on-scroll fade-in delay-3">
-          Nous offrons également un éventail de services adaptés aux particuliers et
-          aux entreprises, pour des journées inoubliables en pleine nature. Et pour
-          une pause gourmande, notre restaurant vous invite à découvrir des
-          spécialités marocaines savoureuses, préparées avec passion.
-        </p>
+        <div className="about-v2-header-content">
+          <h3 className="about-v2-subtitle animate-on-scroll fade-in">Qui Sommes-Nous?</h3>
+          <h1 className="about-v2-title animate-on-scroll fade-in delay-1">
+            AVENTURE INSPIRANTE<br />ET SOLIDARITÉ
+          </h1>
+          
+          {/* Floating Images with Text Wrap */}
+          <div className="floating-images-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=350&q=80"
+              alt="Forest adventure"
+              className="floating-img float-left animate-on-scroll fade-in delay-2"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=350&q=80"
+              alt="Group adventure"
+              className="floating-img float-right animate-on-scroll fade-in delay-2"
+            />
+            
+            <p className="about-v2-desc animate-on-scroll fade-in delay-2">
+              Niché au cœur de la forêt de Tanger, notre parc est un véritable havre de
+              nature et d'aventure. Offrant une vue imprenable sur la mer et la forêt, nous
+              proposons une large gamme d'activités pour tous les âges : tyroliennes,
+              équitation, piscine panoramique, trampolines, paintball, ferme
+              pédagogique, des parcs pour enfants ainsi que des balades en quad et
+              buggy pour une dose d'adrénaline.
+            </p>
+            <p className="about-v2-desc animate-on-scroll fade-in delay-3">
+              Nous offrons également un éventail de services adaptés aux particuliers et
+              aux entreprises, pour des journées inoubliables en pleine nature. Et pour
+              une pause gourmande, notre restaurant vous invite à découvrir des
+              spécialités marocaines savoureuses, préparées avec passion.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Features Grid Section */}
@@ -326,7 +343,7 @@ export default function AboutPage() {
           {/* Team Member 2 */}
           <div className="team-card animate-on-scroll slide-up delay-1">
             <div className="team-img-wrapper">
-              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80" alt="Team Member Avatar" loading="lazy" />
+              <img src="wiam2.jpeg" alt="Team Member Avatar" loading="lazy" />
               <div className="team-img-overlay"></div>
               <div className="team-socials">
                 <a href="#" aria-label="Facebook">
@@ -340,14 +357,14 @@ export default function AboutPage() {
                 </a>
               </div>
             </div>
-            <h4>Arthur Finch</h4>
-            <p>Conservation Specialist</p>
+            <h4>WIAM DILLAL</h4>
+            <p>CEO</p>
           </div>
 
           {/* Team Member 3 */}
           <div className="team-card animate-on-scroll slide-up delay-2">
             <div className="team-img-wrapper">
-              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80" alt="Team Member Avatar" loading="lazy" />
+              <img src="khaoula.jpeg" alt="Team Member Avatar" loading="lazy" />
               <div className="team-img-overlay"></div>
               <div className="team-socials">
                 <a href="#" aria-label="Facebook">
@@ -361,30 +378,12 @@ export default function AboutPage() {
                 </a>
               </div>
             </div>
-            <h4>Sarah Woods</h4>
+            <h4>KHAOULA BOUGHABA</h4>
             <p>Events Coordinator</p>
           </div>
 
-          {/* Team Member 4 */}
-          <div className="team-card animate-on-scroll slide-up delay-3">
-            <div className="team-img-wrapper">
-              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80" alt="Team Member Avatar" loading="lazy" />
-              <div className="team-img-overlay"></div>
-              <div className="team-socials">
-                <a href="#" aria-label="Facebook">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
-                </a>
-                <a href="#" aria-label="Twitter">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" /></svg>
-                </a>
-                <a href="#" aria-label="LinkedIn">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" /><circle cx="4" cy="4" r="2" /></svg>
-                </a>
-              </div>
-            </div>
-            <h4>Oliver Brooks</h4>
-            <p>Operations Manager</p>
-          </div>
+          
+          
         </div>
       </section>
     </div>

@@ -21,7 +21,7 @@ const eventsList = [
     frenchTitle: 'Festivals de Musique & Nature',
     description: 'Immersive outdoor festivals with state-of-the-art stage setups, custom lighting under the canopy, gourmet food trucks, and acoustic nature sessions.',
     frenchDescription: 'Des festivals en plein air immersifs avec des scènes intégrées à la nature, un éclairage LED sous la canopée, des food trucks haut de gamme et des sessions acoustiques.',
-    image: 'https://images.unsplash.com/photo-1472653425572-cf5126d4a1b6?w=1000&q=80',
+    image: 'https://tse1.mm.bing.net/th/id/OIP.THsKsuq8RV3gKhmwA8wOdQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
     capacity: '100 - 500 Guests',
     catering: 'Diverse Food Trucks & Open Bar',
     highlight: 'Live acoustics & light shows'
@@ -32,7 +32,7 @@ const eventsList = [
     frenchTitle: 'Journées Famille & Détente',
     description: 'A perfect gathering for all generations, featuring custom outdoor giant lawn games, scenic picnics, agricultural workshop visits, and group challenges.',
     frenchDescription: 'Un rassemblement idéal pour toutes les générations, comprenant des pique-niques gourmands, des jeux géants en plein air, des ateliers nature et des défis amusants.',
-    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=1000&q=80',
+    image: 'https://thumbs.dreamstime.com/b/amusement-en-famille-dans-le-parc-heureuse-passer-du-temps-et-jouer-avec-sa-fille-270847757.jpg',
     capacity: '20 - 150 Guests',
     catering: 'Rustic Barbecue & Fresh Juices',
     highlight: 'All ages activities'

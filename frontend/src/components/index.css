@@ -911,10 +911,13 @@ body {
 /* Rest of about V2 */
 
 .about-v2-header {
-  text-align: center;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto 5rem;
   padding: 0 2rem;
+}
+
+.about-v2-header-content {
+  text-align: center;
 }
 
 .about-v2-subtitle {
@@ -931,7 +934,7 @@ body {
   color: var(--green-dark);
   text-transform: uppercase;
   line-height: 1.1;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .about-v2-desc {
@@ -939,6 +942,39 @@ body {
   line-height: 1.7;
   color: #333;
   margin-bottom: 1.5rem;
+}
+
+/* =============================================
+   FLOATING IMAGES WITH TEXT WRAP
+   ============================================= */
+.floating-images-wrapper {
+  text-align: left;
+  overflow: auto;
+}
+
+.floating-img {
+  width: 320px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  margin: 0 1.5rem 1.5rem 0;
+  transition: var(--transition);
+}
+
+.floating-img.float-left {
+  float: left;
+}
+
+.floating-img.float-right {
+  float: right;
+  margin-right: 0;
+  margin-left: 1.5rem;
+}
+
+.floating-img:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
 .about-v2-features {
@@ -1179,10 +1215,14 @@ body {
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
+  padding: 3rem;
+  border: 8px solid #f0d634;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .team-card {
@@ -1461,6 +1501,7 @@ body {
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+    padding: 2rem;
   }
 
   .about-team-title {

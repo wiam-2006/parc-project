@@ -18,10 +18,188 @@ export default function Memberships({ setCurrentPage }) {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState(null); // null | 'success' | 'error' | 'duplicate' | 'submitting'
 
+  const [isFlowOpen, setIsFlowOpen] = useState(false);
+  const [activeStep, setActiveStep] = useState(1);
+  const [selectedPackage, setSelectedPackage] = useState(null);
+  const [personalInfo, setPersonalInfo] = useState({
+    firstName: '',
+    lastName: '',
+    cin: '',
+    phone: '',
+    email: '',
+  });
+  const [paymentInfo, setPaymentInfo] = useState({
+    cardName: '',
+    cardNumber: '',
+    expiry: '',
+    cvv: '',
+  });
+  const [stepErrors, setStepErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmation, setConfirmation] = useState(null);
+  const [paymentError, setPaymentError] = useState(null);
+
+  const packageOptions = [
+    {
+      label: '3 months',
+      price: '180 DH',
+      description: 'A short-term adventure package for seasonal explorers.',
+      value: 180,
+    },
+    {
+      label: '6 months',
+      price: '340 DH',
+      description: 'A half-year plan for regular nature visits.',
+      value: 340,
+    },
+    {
+      label: '1 year',
+      price: '620 DH',
+      description: 'A full annual membership with the best value.',
+      value: 620,
+    },
+  ];
+
+  const stepLabels = ['Choose Plan', 'Personal Information', 'Payment', 'Confirmation'];
+
+  const openMembershipFlow = () => {
+    setIsFlowOpen(true);
+    setActiveStep(1);
+    setSelectedPackage(null);
+    setPersonalInfo({ firstName: '', lastName: '', cin: '', phone: '', email: '' });
+    setPaymentInfo({ cardName: '', cardNumber: '', expiry: '', cvv: '' });
+    setStepErrors({});
+    setConfirmation(null);
+    setPaymentError(null);
+  };
+
+  const closeMembershipFlow = () => {
+    setIsFlowOpen(false);
+    setActiveStep(1);
+  };
+
+  const handleSelectPackage = (option) => {
+    setSelectedPackage(option);
+    setStepErrors((prev) => ({ ...prev, package: null }));
+  };
+
+  const handlePersonalChange = (event) => {
+    const { name, value } = event.target;
+    setPersonalInfo((prev) => ({ ...prev, [name]: value }));
+    setStepErrors((prev) => ({ ...prev, [name]: null }));
+  };
+
+  const handlePaymentChange = (event) => {
+    const { name, value } = event.target;
+    setPaymentInfo((prev) => ({ ...prev, [name]: value }));
+    setStepErrors((prev) => ({ ...prev, [name]: null }));
+  };
+
+  const validateStep = () => {
+    const errors = {};
+    if (activeStep === 1) {
+      if (!selectedPackage) {
+        errors.package = 'Please select a package to continue.';
+      }
+    }
+
+    if (activeStep === 2) {
+      if (!personalInfo.firstName.trim()) {
+        errors.firstName = 'First name is required.';
+      }
+      if (!personalInfo.lastName.trim()) {
+        errors.lastName = 'Last name is required.';
+      }
+      if (!personalInfo.cin.trim()) {
+        errors.cin = 'CIN is required.';
+      }
+      if (!personalInfo.phone.trim()) {
+        errors.phone = 'Phone number is required.';
+      }
+      if (!personalInfo.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(personalInfo.email)) {
+        errors.email = 'A valid email address is required.';
+      }
+    }
+
+    if (activeStep === 3) {
+      if (!paymentInfo.cardName.trim()) {
+        errors.cardName = 'Card holder name is required.';
+      }
+      if (!paymentInfo.cardNumber.trim() || paymentInfo.cardNumber.replace(/\D/g, '').length < 12) {
+        errors.cardNumber = 'Please enter a valid card number.';
+      }
+      if (!paymentInfo.expiry.trim() || !/^\d{2}\/\d{2}$/.test(paymentInfo.expiry)) {
+        errors.expiry = 'Use MM/YY format.';
+      }
+      if (!paymentInfo.cvv.trim() || paymentInfo.cvv.length < 3) {
+        errors.cvv = 'Please enter a valid CVV.';
+      }
+    }
+
+    setStepErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleNext = async () => {
+    if (!validateStep()) {
+      return;
+    }
+
+    if (activeStep < 3) {
+      setActiveStep((prev) => prev + 1);
+      return;
+    }
+
+    if (activeStep === 3) {
+      setIsSubmitting(true);
+      setPaymentError(null);
+
+      try {
+        const response = await fetch('http://localhost/funzone_parc/backend/public/api/memberships', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            package: selectedPackage.label,
+            firstName: personalInfo.firstName,
+            lastName: personalInfo.lastName,
+            cin: personalInfo.cin,
+            phone: personalInfo.phone,
+            email: personalInfo.email,
+            cardName: paymentInfo.cardName,
+            cardNumber: paymentInfo.cardNumber,
+            expiry: paymentInfo.expiry,
+            cvv: paymentInfo.cvv,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Payment could not be completed.');
+        }
+
+        setConfirmation(data.data);
+        setActiveStep(4);
+      } catch (error) {
+        setPaymentError(error.message || 'Unable to process payment. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+  };
+
+  const handleBack = () => {
+    if (activeStep > 1) {
+      setActiveStep((prev) => prev - 1);
+    }
+  };
+
+  const totalPrice = selectedPackage ? selectedPackage.price : '$0';
+
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     setNewsletterStatus('submitting');
-    fetch('http://localhost/Funzone-park/backend/public/api/newsletter', {
+    fetch('http://localhost/funzone_parc/backend/public/api/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: newsletterEmail })
@@ -39,7 +217,7 @@ export default function Memberships({ setCurrentPage }) {
   };
 
   useEffect(() => {
-    fetch('http://localhost/Funzone-park/backend/public/api/membership-plans')
+    fetch('http://localhost/funzone_parc/backend/public/api/membership-plans')
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -290,8 +468,8 @@ export default function Memberships({ setCurrentPage }) {
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                className="group relative overflow-hidden flex items-center gap-3 w-80% rounded-full text-white font-semibold text-[17px] tracking-wide"
+                onClick={openMembershipFlow}
+                className="group relative overflow-hidden flex items-center gap-3 rounded-full text-white font-semibold text-[17px] tracking-wide"
                 style={{
                   background: 'rgba(255,255,255,0.12)',
                   border: '1.5px solid rgba(255,255,255,0.55)',
@@ -360,6 +538,203 @@ export default function Memberships({ setCurrentPage }) {
           </div>
         </motion.div>
       </section>
+
+      {isFlowOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-10 py-14 bg-black/60">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full max-w-[1320px] bg-white rounded-[40px] shadow-2xl overflow-hidden"
+          >
+            <div className="flex items-center justify-between gap-4 border-b border-slate-200 p-6 bg-[#f5fbf4]">
+              <div>
+                <p className="text-sm uppercase tracking-[0.3em] text-[#2d7a4f]">Membership Checkout</p>
+                <h3 className="text-3xl font-bold text-[#1b4332]">Complete your membership</h3>
+              </div>
+              <button
+                type="button"
+                onClick={closeMembershipFlow}
+                className="text-[#1b4332] hover:text-[#2d7a4f] text-xl font-bold"
+                aria-label="Close membership flow"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="border-b border-slate-200 bg-white px-10 py-6">
+              <div className="grid grid-cols-4 gap-8 text-center text-sm sm:text-base">
+                {stepLabels.map((label, index) => (
+                  <div key={label} className="flex flex-col items-center gap-2">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${activeStep === index + 1 ? 'bg-[#2d7a4f] text-white' : 'bg-[#e8f6ea] text-[#2d7a4f]'}`}>
+                      {index + 1}
+                    </div>
+                    <span className="text-[#2d7a4f] font-semibold">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-8 bg-[#f8fdf6]">
+              {activeStep === 1 && (
+                <div className="space-y-5">
+                  <p className="text-[#1b4332] text-lg font-medium">Select a package that fits your membership goal.</p>
+                  <div className="grid gap-4 md:grid-cols-3">
+                    {packageOptions.map((option) => (
+                      <button
+                        key={option.label}
+                        type="button"
+                        onClick={() => handleSelectPackage(option)}
+                        className={`rounded-[32px] border p-7 text-left transition-all duration-200 min-h-[280px] shadow-sm ${selectedPackage?.label === option.label ? 'border-[#2d7a4f] bg-[#eaf6eb]' : 'border-[#d5e8d4] bg-white hover:border-[#2d7a4f]/70'}`}
+                      >
+                        <div className="flex items-center justify-between gap-3 mb-4">
+                          <div>
+                            <h4 className="text-xl font-bold text-[#1b4332]">{option.label}</h4>
+                            <p className="text-sm text-[#4f7942]">{option.description}</p>
+                          </div>
+                          <span className="rounded-full bg-[#2d7a4f] px-5 py-2 text-sm font-semibold text-white">{option.price}</span>
+                        </div>
+                        <p className="text-sm text-[#456d44]">Included: Full park access, walking trails, and member news.</p>
+                      </button>
+                    ))}
+                  </div>
+                  {stepErrors.package && <p className="text-sm text-red-600">{stepErrors.package}</p>}
+                </div>
+              )}
+
+              {activeStep === 2 && (
+                <div className="grid gap-4 md:grid-cols-2">
+                  {[
+                    { name: 'firstName', label: 'First Name', type: 'text' },
+                    { name: 'lastName', label: 'Last Name', type: 'text' },
+                    { name: 'cin', label: 'CIN', type: 'text' },
+                    { name: 'phone', label: 'Phone Number', type: 'text' },
+                    { name: 'email', label: 'Email Address', type: 'email' },
+                  ].map((field) => (
+                    <label key={field.name} className="flex flex-col gap-2 text-[#1b4332] font-medium">
+                      <span>{field.label}</span>
+                      <input
+                        type={field.type}
+                        name={field.name}
+                        value={personalInfo[field.name]}
+                        onChange={handlePersonalChange}
+                        className="rounded-3xl border border-[#c4dbc4] bg-white px-4 py-3 text-sm text-[#1f3f1b] outline-none focus:border-[#2d7a4f] focus:ring-2 focus:ring-[#dff2d9]"
+                      />
+                      {stepErrors[field.name] && <span className="text-sm text-red-600">{stepErrors[field.name]}</span>}
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              {activeStep === 3 && (
+                <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+                  <div className="space-y-5">
+                    <div className="rounded-[34px] border border-[#d7e8d5] bg-white p-8 shadow-sm">
+                      <h4 className="text-xl font-bold text-[#1b4332] mb-4">Payment details</h4>
+                      {[
+                        { name: 'cardName', label: 'Card Holder Name', placeholder: 'Full name as on card' },
+                        { name: 'cardNumber', label: 'Card Number', placeholder: '1234 5678 9012 3456' },
+                        { name: 'expiry', label: 'Expiration Date', placeholder: 'MM/YY' },
+                        { name: 'cvv', label: 'CVV', placeholder: '123' },
+                      ].map((field) => (
+                        <label key={field.name} className="flex flex-col gap-2 text-[#1b4332] font-medium">
+                          <span>{field.label}</span>
+                          <input
+                            type={field.name === 'cvv' ? 'password' : 'text'}
+                            name={field.name}
+                            value={paymentInfo[field.name]}
+                            onChange={handlePaymentChange}
+                            placeholder={field.placeholder}
+                            className="rounded-3xl border border-[#c4dbc4] bg-[#f8fff4] px-4 py-3 text-sm text-[#1f3f1b] outline-none focus:border-[#2d7a4f] focus:ring-2 focus:ring-[#dff2d9]"
+                          />
+                          {stepErrors[field.name] && <span className="text-sm text-red-600">{stepErrors[field.name]}</span>}
+                        </label>
+                      ))}
+                    </div>
+
+                    {paymentError && <div className="rounded-3xl bg-[#fee2e2] p-4 text-sm text-red-700">{paymentError}</div>}
+                  </div>
+
+                  <div className="rounded-[34px] border border-[#d7e8d5] bg-white p-8 shadow-sm">
+                    <h4 className="text-xl font-bold text-[#1b4332] mb-4">Membership summary</h4>
+                    <div className="space-y-4 text-sm text-[#2b5134]">
+                      <div className="flex items-center justify-between">
+                        <span>Package selected</span>
+                        <strong>{selectedPackage?.label}</strong>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Member name</span>
+                        <strong>{personalInfo.firstName || 'First Name'} {personalInfo.lastName || 'Last Name'}</strong>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Duration</span>
+                        <strong>{selectedPackage?.label}</strong>
+                      </div>
+                      <div className="border-t border-[#d5e8d4] pt-4 flex items-center justify-between text-lg font-bold text-[#1b4332]">
+                        <span>Total</span>
+                        <span>{selectedPackage?.price}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeStep === 4 && confirmation && (
+                <div className="rounded-[30px] border border-[#d7e8d5] bg-white p-8 text-[#1b4332] shadow-sm">
+                  <div className="mb-8 text-center">
+                    <p className="text-sm uppercase tracking-[0.3em] text-[#2d7a4f]">Success</p>
+                    <h4 className="mt-3 text-3xl font-bold">Membership created</h4>
+                    <p className="mt-2 text-sm text-[#4f6a53]">Your membership is active and ready to use.</p>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {[
+                      { label: 'Full Name', value: confirmation.full_name },
+                      { label: 'Membership ID', value: confirmation.membership_id },
+                      { label: 'Selected Package', value: confirmation.package },
+                      { label: 'Start Date', value: confirmation.start_date },
+                      { label: 'Expiration Date', value: confirmation.expiration_date },
+                      { label: 'Payment Status', value: confirmation.payment_status },
+                    ].map((item) => (
+                      <div key={item.label} className="rounded-3xl bg-[#f6fdee] p-4">
+                        <p className="text-xs uppercase tracking-[0.2em] text-[#4f7942]">{item.label}</p>
+                        <p className="mt-2 text-base font-semibold text-[#1b4332]">{item.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-4 border-t border-slate-200 bg-white px-8 py-6 sm:flex-row sm:items-center sm:justify-between">
+              <button
+                type="button"
+                onClick={handleBack}
+                disabled={activeStep === 1 || isSubmitting}
+                className="w-full sm:w-auto min-w-[160px] rounded-full border border-[#c4dbc4] bg-white px-8 py-4 text-base font-semibold text-[#1b4332] transition hover:bg-[#f2fbf4] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Back
+              </button>
+              {activeStep !== 4 ? (
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto min-w-[220px] rounded-full bg-[#2d7a4f] px-10 py-4 text-base font-semibold text-white shadow-[0_14px_30px_rgba(45,118,56,0.24)] transition hover:bg-[#225c34] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {activeStep === 3 ? (isSubmitting ? 'Processing...' : 'Complete Payment') : 'Next'}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={closeMembershipFlow}
+                  className="rounded-full bg-[#2d7a4f] px-8 py-3 text-sm font-semibold text-white transition hover:bg-[#225c34]"
+                >
+                  Close
+                </button>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* Balanced Spacer between CTA and Newsletter */}
       <div className="w-full h-32 md:h-48" aria-hidden="true" />
