@@ -12,23 +12,37 @@ import ConfirmationSection from './components/booking/ConfirmationSection';
 import Restaurant from './components/Restaurant';
 import EventsPage from './components/EventsPage';
 import AboutPage from './components/AboutPage';
+import AdminDashboard from './components/Admin/AdminDashboard';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('Home');
+  const [currentPage, setCurrentPage] = useState(() =>
+    window.location.pathname.startsWith('/admin') ? 'Admin' : 'Home'
+  );
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [bookingData, setBookingData] = useState({ selectedDate: new Date(), adults: 2, children: 0 });
 
+  const navigatePage = (page) => {
+    if (page === 'Admin') {
+      window.history.pushState({}, '', '/admin');
+    } else if (window.location.pathname.startsWith('/admin')) {
+      window.history.pushState({}, '', '/');
+    }
+    setCurrentPage(page);
+  };
+
   const handleBookNow = (activity) => {
     setSelectedActivity(activity);
-    setCurrentPage('Reservation');
+    navigatePage('Reservation');
   };
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'Admin':
+        return <AdminDashboard onExit={() => navigatePage('Home')} />;
       case 'Home':
-        return <Home setCurrentPage={setCurrentPage} onBookActivity={handleBookNow} />;
+        return <Home setCurrentPage={navigatePage} onBookActivity={handleBookNow} />;
       case 'Memberships':
-        return <Memberships setCurrentPage={setCurrentPage} />;
+        return <Memberships setCurrentPage={navigatePage} />;
       case 'Restaurant':
         return <Restaurant />;
       case 'Reservation':
@@ -37,14 +51,14 @@ function App() {
             selectedActivity={selectedActivity}
             onConfirm={(data) => {
               setBookingData({ ...data, activity: selectedActivity });
-              setCurrentPage('Confirmation');
+              navigatePage('Confirmation');
             }}
           />
         );
       case 'Confirmation':
-        return <ConfirmationSection onBack={() => setCurrentPage('Reservation')} onFinish={() => setCurrentPage('Activities')} bookingData={bookingData} />;
+        return <ConfirmationSection onBack={() => navigatePage('Reservation')} onFinish={() => navigatePage('Activities')} bookingData={bookingData} />;
       case 'Activities':
-        return <Activities setCurrentPage={setCurrentPage} onBookActivity={handleBookNow} />;
+        return <Activities setCurrentPage={navigatePage} onBookActivity={handleBookNow} />;
       case 'Events':
         return <EventsPage />;
       case 'About Us':
@@ -53,22 +67,22 @@ function App() {
         return (
           <>
             <Hero />
-            <ActivitiesSection setCurrentPage={setCurrentPage} />
+            <ActivitiesSection setCurrentPage={navigatePage} />
             <ContactSection />
           </>
         );
       default:
-        return <Home setCurrentPage={setCurrentPage} onBookActivity={handleBookNow} />;
+        return <Home setCurrentPage={navigatePage} onBookActivity={handleBookNow} />;
     }
   };
 
   return (
     <div className="app">
-      <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      {currentPage !== 'Admin' && <Header currentPage={currentPage} setCurrentPage={navigatePage} />}
       <main>
         {renderPage()}
       </main>
-      {currentPage !== 'Home' && <Footer />}
+      {currentPage !== 'Home' && currentPage !== 'Admin' && <Footer />}
     </div>
   );
 }

@@ -6,17 +6,17 @@ import './ConfirmationSection.css';
 
 // --- Validation helpers ---
 const isValidCardNumber = (v) => /^\d{13,19}$/.test(v.replace(/\s/g, ''));
-const isValidExpiry     = (v) => {
+const isValidExpiry = (v) => {
   const match = v.match(/^(0[1-9]|1[0-2])\s*\/\s*(\d{2})$/);
   if (!match) return false;
   const now = new Date();
-  const year  = 2000 + parseInt(match[2], 10);
+  const year = 2000 + parseInt(match[2], 10);
   const month = parseInt(match[1], 10);
   return year > now.getFullYear() || (year === now.getFullYear() && month >= now.getMonth() + 1);
 };
-const isValidCVV        = (v) => /^\d{3,4}$/.test(v.trim());
-const isNotEmpty        = (v) => v.trim().length >= 2;
-const isValidPostal     = (v) => /^[a-zA-Z0-9\s\-]{4,10}$/.test(v.trim());
+const isValidCVV = (v) => /^\d{3,4}$/.test(v.trim());
+const isNotEmpty = (v) => v.trim().length >= 2;
+const isValidPostal = (v) => /^[a-zA-Z0-9\s\-]{4,10}$/.test(v.trim());
 
 const ConfirmationSection = ({ onBack, onFinish, bookingData }) => {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -24,8 +24,8 @@ const ConfirmationSection = ({ onBack, onFinish, bookingData }) => {
   const [error, setError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('online'); // 'online' or 'local'
 
-  const { selectedDate, adults, children, activity, name, email, phone, activeTime } = bookingData || { 
-    selectedDate: new Date(), adults: 2, children: 0, activity: null 
+  const { selectedDate, adults, children, activity, name, email, phone, activeTime } = bookingData || {
+    selectedDate: new Date(), adults: 2, children: 0, activity: null
   };
   const totalTickets = adults + children;
 
@@ -36,25 +36,25 @@ const ConfirmationSection = ({ onBack, onFinish, bookingData }) => {
 
   // --- Payment form state ---
   const [cardNumber, setCardNumber] = useState('');
-  const [expiry,     setExpiry]     = useState('');
-  const [cvv,        setCvv]        = useState('');
+  const [expiry, setExpiry] = useState('');
+  const [cvv, setCvv] = useState('');
   // --- Billing form state ---
-  const [billName,   setBillName]   = useState('');
-  const [street,     setStreet]     = useState('');
-  const [city,       setCity]       = useState('');
-  const [postal,     setPostal]     = useState('');
+  const [billName, setBillName] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [postal, setPostal] = useState('');
 
   const [touched, setTouched] = useState({});
   const touch = (field) => setTouched((p) => ({ ...p, [field]: true }));
 
   const errors = useMemo(() => ({
     cardNumber: (paymentMethod === 'online' && !isValidCardNumber(cardNumber)) ? 'Enter a valid card number (13–19 digits).' : '',
-    expiry:     (paymentMethod === 'online' && !isValidExpiry(expiry))         ? 'Enter a valid expiry date (MM/YY).' : '',
-    cvv:        (paymentMethod === 'online' && !isValidCVV(cvv))               ? 'CVV must be 3 or 4 digits.' : '',
-    billName:   !isNotEmpty(billName)          ? 'Full name is required.' : '',
-    street:     !isNotEmpty(street)            ? 'Street address is required.' : '',
-    city:       !isNotEmpty(city)              ? 'City is required.' : '',
-    postal:     !isValidPostal(postal)         ? 'Enter a valid postal code.' : '',
+    expiry: (paymentMethod === 'online' && !isValidExpiry(expiry)) ? 'Enter a valid expiry date (MM/YY).' : '',
+    cvv: (paymentMethod === 'online' && !isValidCVV(cvv)) ? 'CVV must be 3 or 4 digits.' : '',
+    billName: !isNotEmpty(billName) ? 'Full name is required.' : '',
+    street: !isNotEmpty(street) ? 'Street address is required.' : '',
+    city: !isNotEmpty(city) ? 'City is required.' : '',
+    postal: !isValidPostal(postal) ? 'Enter a valid postal code.' : '',
   }), [cardNumber, expiry, cvv, billName, street, city, postal, paymentMethod]);
 
   const isFormValid = Object.values(errors).every((e) => e === '');
@@ -102,7 +102,7 @@ const ConfirmationSection = ({ onBack, onFinish, bookingData }) => {
     };
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/bookings', finalData);
+      const response = await axios.post('http://localhost/Funzone-park/backend/public/api/bookings', finalData);
       if (response.data.success) {
         setIsSuccess(true);
       }
@@ -214,14 +214,13 @@ const ConfirmationSection = ({ onBack, onFinish, bookingData }) => {
               <div>
                 <label className="form-label">How would you like to pay?</label>
                 <div className="form-select-wrapper">
-                  <CreditCard className="form-select-icon" size={18} />
-                  <select 
-                    className="form-input form-select" 
+                  <select
+                    className="form-input form-select"
                     value={paymentMethod}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   >
-                    <option value="online">Pay Online (Card)</option>
-                    <option value="local">Pay at the Park (Upon arrival)</option>
+                    <option value="online">Pay Online</option>
+                    <option value="local">Pay at the Park </option>
                   </select>
                   <ChevronDown className="select-chevron" size={16} />
                 </div>

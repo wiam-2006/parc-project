@@ -11,6 +11,9 @@ use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\MembershipPlanController;
 use App\Http\Controllers\Api\MembershipController;
 use App\Http\Controllers\Api\NewsletterController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AdminStatsController;
+use App\Http\Controllers\Api\AdminEntityController;
 
 Route::post('/contact', [ContactController::class, 'store']);
 Route::post('/event-inquiries', [EventInquiryController::class, 'store']);
@@ -31,4 +34,19 @@ Route::post('/bookings', [BookingController::class, 'store']);
 
 Route::get('/test', function () {
     return response()->json(['ok' => true]);
+});
+
+Route::prefix('admin')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+        Route::get('/me', [AuthController::class, 'me']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/stats', [AdminStatsController::class, 'index']);
+        Route::get('/tables', [AdminEntityController::class, 'tables']);
+        Route::get('/tables/{table}', [AdminEntityController::class, 'index']);
+        Route::post('/tables/{table}', [AdminEntityController::class, 'store']);
+        Route::put('/tables/{table}/{id}', [AdminEntityController::class, 'update']);
+        Route::delete('/tables/{table}/{id}', [AdminEntityController::class, 'destroy']);
+    });
 });

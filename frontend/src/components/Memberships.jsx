@@ -13,24 +13,24 @@ const stats = [
 
 const plans = [
   {
-    name: 'Basic',
-    price: '$29/month or\n$290/year',
+    name: '3 Months',
+    price: '180 DH',
     features: ['Access to 3 Adventure seekers', 'Weekday entry (Mon-Thu)', 'Basic hiking trails', 'Parking included', 'Newsletter & updates'],
     isPopular: false,
     btnText: 'Join to park',
     btnClass: 'bg-[#dcecd8] text-[#1b4332] border border-[#1b4332] hover:bg-[#c5dec0]'
   },
   {
-    name: 'Premium',
-    price: '$79/month or\n$790/year',
+    name: '6 Months',
+    price: '340 DH',
     features: ['Unlimited 7-day access', 'Premium trails & activities', 'Priority parking & entry', 'Guided nature tours (2/month)', 'Eco-wellness programs'],
     isPopular: true,
     btnText: 'Subscribe now',
     btnClass: 'bg-[#1b4332] text-white hover:bg-[#0f291e]'
   },
   {
-    name: 'VIP',
-    price: '$149/month or\n$1,490/year',
+    name: '1 Year',
+    price: '620 DH',
     features: ['All Premium benefits', 'Personal nature guide', 'Photography workshops', 'Concierge service', 'Annual retreat invitation'],
     isPopular: false,
     btnText: 'Go VIP',
@@ -39,8 +39,34 @@ const plans = [
 ];
 
 export default function Memberships({ setCurrentPage }) {
-  const [plans, setPlans] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [plans, setPlans] = useState([
+    {
+      name: 'Basic',
+      price: '$29/month or\n$290/year',
+      features: ['Access to 3 Adventure seekers', 'Weekday entry (Mon-Thu)', 'Basic hiking trails', 'Parking included', 'Newsletter & updates'],
+      isPopular: false,
+      btnText: 'Join to park',
+      btnClass: 'bg-[#dcecd8] text-[#1b4332] border border-[#1b4332] hover:bg-[#c5dec0]'
+    },
+    {
+      name: 'Premium',
+      price: '$79/month or\n$790/year',
+      features: ['Unlimited 7-day access', 'Premium trails & activities', 'Priority parking & entry', 'Guided nature tours (2/month)', 'Eco-wellness programs'],
+      isPopular: true,
+      btnText: 'Subscribe now',
+      btnClass: 'bg-[#1b4332] text-white hover:bg-[#0f291e]'
+    },
+    {
+      name: 'VIP',
+      price: '$149/month or\n$1,490/year',
+      features: ['All Premium benefits', 'Personal nature guide', 'Photography workshops', 'Concierge service', 'Annual retreat invitation'],
+      isPopular: false,
+      btnText: 'Go VIP',
+      btnClass: 'bg-[#dcecd8] text-[#1b4332] border border-[#1b4332] hover:bg-[#c5dec0]'
+    }
+  ]);
+  const [loading, setLoading] = useState(false);
+
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState(null); // null | 'success' | 'error' | 'duplicate' | 'submitting'
 
@@ -181,7 +207,7 @@ export default function Memberships({ setCurrentPage }) {
       setPaymentError(null);
 
       try {
-        const response = await fetch('http://localhost/funzone_parc/backend/public/api/memberships', {
+        const response = await fetch('http://localhost/Funzone-park/backend/public/api/memberships', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -225,7 +251,7 @@ export default function Memberships({ setCurrentPage }) {
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     setNewsletterStatus('submitting');
-    fetch('http://localhost/funzone_parc/backend/public/api/newsletter', {
+    fetch('http://localhost/Funzone-park/backend/public/api/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: newsletterEmail })
@@ -243,7 +269,7 @@ export default function Memberships({ setCurrentPage }) {
   };
 
   useEffect(() => {
-    fetch('http://localhost/funzone_parc/backend/public/api/membership-plans')
+    fetch('http://localhost/Funzone-park/backend/public/api/membership-plans')
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -392,10 +418,8 @@ export default function Memberships({ setCurrentPage }) {
                   ))}
                 </ul>
               </div>
-
-              {/* 🌿 Nature Button */}
-
             </motion.div>
+
           ))}
         </div>
       </section>
@@ -532,13 +556,15 @@ export default function Memberships({ setCurrentPage }) {
       </section>
 
       {isFlowOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-10 py-14 bg-black/60">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-10 py-14 bg-black/60" >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             className="w-full max-w-[1320px] bg-white rounded-[40px] shadow-2xl overflow-hidden"
+            style={{ padding: '35px' }}
+
           >
-            <div className="flex items-center justify-between gap-4 border-b border-slate-200 p-6 bg-[#f5fbf4]">
+            <div className="flex items-center justify-between gap-4 border-b border-slate-200 p-6 bg-[#f5fbf4]" style={{ padding: '15px', borderRadius: '15px' }}>
               <div>
                 <p className="text-sm uppercase tracking-[0.3em] text-[#2d7a4f]">Membership Checkout</p>
                 <h3 className="text-3xl font-bold text-[#1b4332]">Complete your membership</h3>
@@ -553,7 +579,7 @@ export default function Memberships({ setCurrentPage }) {
               </button>
             </div>
 
-            <div className="border-b border-slate-200 bg-white px-10 py-6">
+            <div className="border-b border-slate-200 bg-white px-10 py-6" style={{ padding: '15px' }}>
               <div className="grid grid-cols-4 gap-8 text-center text-sm sm:text-base">
                 {stepLabels.map((label, index) => (
                   <div key={label} className="flex flex-col items-center gap-2">
@@ -569,7 +595,7 @@ export default function Memberships({ setCurrentPage }) {
             <div className="p-8 bg-[#f8fdf6]">
               {activeStep === 1 && (
                 <div className="space-y-5">
-                  <p className="text-[#1b4332] text-lg font-medium">Select a package that fits your membership goal.</p>
+                  <p className="text-[#1b4332] text-lg font-medium" style={{ padding: '5px' }}>Select a package that fits your membership goal.</p>
                   <div className="grid gap-4 md:grid-cols-3">
                     {packageOptions.map((option) => (
                       <button
@@ -578,18 +604,18 @@ export default function Memberships({ setCurrentPage }) {
                         onClick={() => handleSelectPackage(option)}
                         className={`rounded-[32px] border p-7 text-left transition-all duration-200 min-h-[280px] shadow-sm ${selectedPackage?.label === option.label ? 'border-[#2d7a4f] bg-[#eaf6eb]' : 'border-[#d5e8d4] bg-white hover:border-[#2d7a4f]/70'}`}
                       >
-                        <div className="flex items-center justify-between gap-3 mb-4">
+                        <div className="flex items-center justify-between gap-3 mb-4" style={{ padding: '15px' }}>
                           <div>
                             <h4 className="text-xl font-bold text-[#1b4332]">{option.label}</h4>
                             <p className="text-sm text-[#4f7942]">{option.description}</p>
                           </div>
-                          <span className="rounded-full bg-[#2d7a4f] px-5 py-2 text-sm font-semibold text-white">{option.price}</span>
+                          <span className="rounded-full bg-[#2d7a4f] px-5 py-2 text-sm font-semibold text-white" style={{ padding: '10px' }}>{option.price}</span>
                         </div>
-                        <p className="text-sm text-[#456d44]">Included: Full park access, walking trails, and member news.</p>
+                        <p className="text-sm text-[#456d44]" style={{ padding: '15px' }}>Included: Full park access, walking trails, and member news.</p>
                       </button>
                     ))}
                   </div>
-                  {stepErrors.package && <p className="text-sm text-red-600">{stepErrors.package}</p>}
+                  {stepErrors.package && <p className="text-sm text-red-600" tyle={{ padding: '15px', fontSize: '50px' }}>{stepErrors.package}</p>}
                 </div>
               )}
 
@@ -602,13 +628,14 @@ export default function Memberships({ setCurrentPage }) {
                     { name: 'phone', label: 'Phone Number', type: 'text' },
                     { name: 'email', label: 'Email Address', type: 'email' },
                   ].map((field) => (
-                    <label key={field.name} className="flex flex-col gap-2 text-[#1b4332] font-medium">
+                    <label key={field.name} className="flex flex-col gap-2 text-[#1b4332] font-medium" style={{ padding: '15px' }}>
                       <span>{field.label}</span>
                       <input
                         type={field.type}
                         name={field.name}
                         value={personalInfo[field.name]}
                         onChange={handlePersonalChange}
+                        style={{ padding: '15px' }}
                         className="rounded-3xl border border-[#c4dbc4] bg-white px-4 py-3 text-sm text-[#1f3f1b] outline-none focus:border-[#2d7a4f] focus:ring-2 focus:ring-[#dff2d9]"
                       />
                       {stepErrors[field.name] && <span className="text-sm text-red-600">{stepErrors[field.name]}</span>}
@@ -619,9 +646,9 @@ export default function Memberships({ setCurrentPage }) {
 
               {activeStep === 3 && (
                 <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
-                  <div className="space-y-5">
-                    <div className="rounded-[34px] border border-[#d7e8d5] bg-white p-8 shadow-sm">
-                      <h4 className="text-xl font-bold text-[#1b4332] mb-4">Payment details</h4>
+                  <div className="space-y-5" style={{ padding: '15px' }}>
+                    <div className="rounded-[34px] border border-[#d7e8d5] bg-white p-8 shadow-sm" >
+                      <h4 className="text-xl font-bold text-[#1b4332] mb-4" style={{ padding: '15px' }}>Payment details</h4>
                       {[
                         { name: 'cardName', label: 'Card Holder Name', placeholder: 'Full name as on card' },
                         { name: 'cardNumber', label: 'Card Number', placeholder: '1234 5678 9012 3456' },
@@ -629,13 +656,14 @@ export default function Memberships({ setCurrentPage }) {
                         { name: 'cvv', label: 'CVV', placeholder: '123' },
                       ].map((field) => (
                         <label key={field.name} className="flex flex-col gap-2 text-[#1b4332] font-medium">
-                          <span>{field.label}</span>
+                          <span style={{ paddingLeft: '10px' }}>{field.label}</span>
                           <input
                             type={field.name === 'cvv' ? 'password' : 'text'}
                             name={field.name}
                             value={paymentInfo[field.name]}
                             onChange={handlePaymentChange}
                             placeholder={field.placeholder}
+                            style={{ padding: '10px', margin: '10px' }}
                             className="rounded-3xl border border-[#c4dbc4] bg-[#f8fff4] px-4 py-3 text-sm text-[#1f3f1b] outline-none focus:border-[#2d7a4f] focus:ring-2 focus:ring-[#dff2d9]"
                           />
                           {stepErrors[field.name] && <span className="text-sm text-red-600">{stepErrors[field.name]}</span>}
@@ -646,22 +674,22 @@ export default function Memberships({ setCurrentPage }) {
                     {paymentError && <div className="rounded-3xl bg-[#fee2e2] p-4 text-sm text-red-700">{paymentError}</div>}
                   </div>
 
-                  <div className="rounded-[34px] border border-[#d7e8d5] bg-white p-8 shadow-sm">
-                    <h4 className="text-xl font-bold text-[#1b4332] mb-4">Membership summary</h4>
+                  <div className="rounded-[34px] border border-[#d7e8d5] bg-white p-8 shadow-sm" style={{ padding: '15px', margin: '15px' }}>
+                    <h4 className="text-xl font-bold text-[#1b4332] mb-4" style={{ paddingBottom: '15px' }}>Membership summary</h4>
                     <div className="space-y-4 text-sm text-[#2b5134]">
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between" style={{ padding: '10px' }}>
                         <span>Package selected</span>
                         <strong>{selectedPackage?.label}</strong>
                       </div>
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between" style={{ padding: '10px' }}>
                         <span>Member name</span>
                         <strong>{personalInfo.firstName || 'First Name'} {personalInfo.lastName || 'Last Name'}</strong>
                       </div>
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between" style={{ padding: '10px' }}>
                         <span>Duration</span>
                         <strong>{selectedPackage?.label}</strong>
                       </div>
-                      <div className="border-t border-[#d5e8d4] pt-4 flex items-center justify-between text-lg font-bold text-[#1b4332]">
+                      <div className="border-t border-[#d5e8d4] pt-4 flex items-center justify-between text-lg font-bold text-[#1b4332]" style={{ padding: '10px' }}>
                         <span>Total</span>
                         <span>{selectedPackage?.price}</span>
                       </div>
@@ -671,13 +699,13 @@ export default function Memberships({ setCurrentPage }) {
               )}
 
               {activeStep === 4 && confirmation && (
-                <div className="rounded-[30px] border border-[#d7e8d5] bg-white p-8 text-[#1b4332] shadow-sm">
-                  <div className="mb-8 text-center">
-                    <p className="text-sm uppercase tracking-[0.3em] text-[#2d7a4f]">Success</p>
+                <div className="rounded-[40px] border border-[#d7e8d5] bg-white p-10 md:p-14 text-[#1b4332] shadow-sm m-4" style={{height:'400px'}}>
+                  <div className="mb-8 text-center" style={{padding:'15px'}}>
+                    <p className="text-sm uppercase tracking-[0.3em] text-[#2d7a4f]"  style={{padding:'10px'}}>Success</p>
                     <h4 className="mt-3 text-3xl font-bold">Membership created</h4>
                     <p className="mt-2 text-sm text-[#4f6a53]">Your membership is active and ready to use.</p>
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2"  style={{padding:'8px'}}>
                     {[
                       { label: 'Full Name', value: confirmation.full_name },
                       { label: 'Membership ID', value: confirmation.membership_id },
@@ -686,7 +714,7 @@ export default function Memberships({ setCurrentPage }) {
                       { label: 'Expiration Date', value: confirmation.expiration_date },
                       { label: 'Payment Status', value: confirmation.payment_status },
                     ].map((item) => (
-                      <div key={item.label} className="rounded-3xl bg-[#f6fdee] p-4">
+                      <div key={item.label} className="rounded-[32px] bg-[#f6fdee] p-6 border border-[#e8f3de]"  style={{padding:'15px'}}>
                         <p className="text-xs uppercase tracking-[0.2em] text-[#4f7942]">{item.label}</p>
                         <p className="mt-2 text-base font-semibold text-[#1b4332]">{item.value}</p>
                       </div>
@@ -700,6 +728,7 @@ export default function Memberships({ setCurrentPage }) {
               <button
                 type="button"
                 onClick={handleBack}
+                style={{ padding: '10px', margin: '10px' }}
                 disabled={activeStep === 1 || isSubmitting}
                 className="w-full sm:w-auto min-w-[160px] rounded-full border border-[#c4dbc4] bg-white px-8 py-4 text-base font-semibold text-[#1b4332] transition hover:bg-[#f2fbf4] disabled:cursor-not-allowed disabled:opacity-50"
               >
@@ -710,6 +739,7 @@ export default function Memberships({ setCurrentPage }) {
                   type="button"
                   onClick={handleNext}
                   disabled={isSubmitting}
+                  style={{ padding: '10px', margin: '10px' }}
                   className="w-full sm:w-auto min-w-[220px] rounded-full bg-[#2d7a4f] px-10 py-4 text-base font-semibold text-white shadow-[0_14px_30px_rgba(45,118,56,0.24)] transition hover:bg-[#225c34] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {activeStep === 3 ? (isSubmitting ? 'Processing...' : 'Complete Payment') : 'Next'}
@@ -717,6 +747,7 @@ export default function Memberships({ setCurrentPage }) {
               ) : (
                 <button
                   type="button"
+                  style={{ padding: '10px', margin: '10px' }}
                   onClick={closeMembershipFlow}
                   className="rounded-full bg-[#2d7a4f] px-8 py-3 text-sm font-semibold text-white transition hover:bg-[#225c34]"
                 >

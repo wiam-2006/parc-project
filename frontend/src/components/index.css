@@ -1220,7 +1220,7 @@ body {
   max-width: 900px;
   margin: 0 auto;
   padding: 3rem;
-  border: 8px solid #f0d634;
+  border: 8px solid var(--green-primary);
   border-radius: 32px;
   background: rgba(255, 255, 255, 0.6);
 }

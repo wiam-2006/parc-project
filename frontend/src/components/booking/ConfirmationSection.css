@@ -20,6 +20,7 @@
   text-decoration: none;
   margin-bottom: 1rem;
 }
+
 .back-link:hover {
   color: #1b5e40;
 }
@@ -50,7 +51,7 @@
   border-radius: 12px;
   padding: 1.5rem 2rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .checkout-card-title {
@@ -65,11 +66,13 @@
   display: flex;
   gap: 1rem;
 }
+
 @media (max-width: 600px) {
   .booking-summary-row {
     flex-direction: column;
   }
 }
+
 .booking-summary-item {
   flex: 1;
   background: #f4f6f5;
@@ -80,10 +83,12 @@
   gap: 1rem;
   position: relative;
 }
+
 .booking-summary-icon {
   color: #1b5e40;
   margin-top: 0.2rem;
 }
+
 .booking-summary-text label {
   display: block;
   font-size: 0.65rem;
@@ -92,11 +97,13 @@
   text-transform: uppercase;
   margin-bottom: 0.2rem;
 }
+
 .booking-summary-text span {
   font-size: 0.95rem;
   font-weight: 600;
   color: #333;
 }
+
 .edit-btn {
   position: absolute;
   top: 1rem;
@@ -108,6 +115,7 @@
   color: #1b5e40;
   cursor: pointer;
 }
+
 .edit-btn:hover {
   text-decoration: underline;
 }
@@ -118,9 +126,11 @@
   gap: 1rem;
   margin-bottom: 1rem;
 }
-.form-row > div {
+
+.form-row>div {
   flex: 1;
 }
+
 .form-label {
   display: block;
   font-size: 0.75rem;
@@ -128,25 +138,18 @@
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
-.form-input {
-  width: 100%;
-  padding: 0.9rem;
-  border: none;
-  background: #f4f6f5;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 0.9rem;
-  color: #333;
-  outline: none;
-  transition: box-shadow 0.2s;
-  box-sizing: border-box;
-}
+
+.form-input {}
+
 .form-input:focus {
   box-shadow: 0 0 0 2px rgba(27, 94, 64, 0.2);
 }
+
 .form-select-wrapper {
   position: relative;
+  width: 100%;
 }
+
 .form-select-icon {
   position: absolute;
   left: 1rem;
@@ -154,11 +157,13 @@
   transform: translateY(-50%);
   color: #555;
 }
+
 .form-select {
   padding-left: 2.8rem;
   cursor: pointer;
   appearance: none;
 }
+
 .select-chevron {
   position: absolute;
   right: 1rem;
@@ -178,15 +183,18 @@
   align-items: flex-start;
   margin-bottom: 2rem;
 }
+
 .alert-icon {
   color: #d14124;
 }
+
 .alert-title {
   font-weight: 700;
   font-size: 0.9rem;
   color: #333;
   margin-bottom: 0.3rem;
 }
+
 .alert-desc {
   font-size: 0.8rem;
   color: #666;
@@ -210,9 +218,11 @@
   cursor: pointer;
   transition: background 0.3s;
 }
+
 .checkout-action-btn:hover {
   background: #1b5e40;
 }
+
 .terms-text {
   text-align: center;
   font-size: 0.65rem;
@@ -226,26 +236,31 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
+
 .summary-img-wrapper {
   height: 200px;
   overflow: hidden;
 }
+
 .summary-img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .summary-content {
   padding: 1.5rem 2rem;
 }
+
 .summary-park-title {
   font-size: 1.1rem;
   font-weight: 700;
   color: #333;
   margin-bottom: 0.5rem;
 }
+
 .summary-meta {
   display: flex;
   align-items: center;
@@ -254,15 +269,18 @@
   color: #777;
   margin-bottom: 1.5rem;
 }
+
 .summary-meta-item {
   display: flex;
   align-items: center;
   gap: 0.3rem;
 }
+
 .summary-rating {
   color: #333;
   font-weight: 600;
 }
+
 .summary-rating-star {
   color: #f5c518;
 }
@@ -274,6 +292,7 @@
   color: #666;
   margin-bottom: 0.8rem;
 }
+
 .summary-price-row.total {
   font-size: 1.1rem;
   font-weight: 700;
@@ -282,6 +301,7 @@
   padding-top: 1rem;
   border-top: 1px solid #eee;
 }
+
 .total-price-green {
   color: #1b5e40;
   font-size: 1.4rem;
@@ -294,6 +314,7 @@
   padding: 1.5rem 2rem;
   margin-top: 1.5rem;
 }
+
 .promo-title {
   font-size: 0.65rem;
   font-weight: 700;
@@ -301,10 +322,12 @@
   text-transform: uppercase;
   margin-bottom: 1rem;
 }
+
 .promo-input-group {
   display: flex;
   gap: 0.5rem;
 }
+
 .promo-input {
   flex: 1;
   background: #e2ede6;
@@ -315,9 +338,11 @@
   color: #333;
   outline: none;
 }
+
 .promo-input::placeholder {
   color: #8fa89b;
 }
+
 .promo-btn {
   background: #0d4025;
   color: white;
@@ -328,6 +353,7 @@
   font-weight: 600;
   cursor: pointer;
 }
+
 .promo-btn:hover {
   background: #1b5e40;
 }
@@ -365,9 +391,19 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  33%       { transform: translateX(-4px); }
-  66%       { transform: translateX(4px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  33% {
+    transform: translateX(-4px);
+  }
+
+  66% {
+    transform: translateX(4px);
+  }
 }
 
 /* Disabled state – greyed out but still clickable to reveal errors */
@@ -376,6 +412,7 @@
   cursor: not-allowed;
   box-shadow: none;
 }
+
 .checkout-action-btn.checkout-action-btn-disabled:hover {
   background: #9ab5aa;
 }
